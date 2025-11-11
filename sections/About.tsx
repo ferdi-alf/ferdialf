@@ -3,8 +3,8 @@
 import React, { useRef, useEffect, useCallback, useState } from "react";
 import { gsap } from "gsap";
 import TechStack from "@/components/TechStack";
-import { AnimatedBeam } from "@/components/ui/animated-beam";
 import { AnimatedBeamDemo } from "@/components/Connect";
+import Lanyard from "@/components/Lanyard";
 
 export interface BentoCardProps {
   color?: string;
@@ -55,7 +55,7 @@ const cardData: BentoCardProps[] = [
     title: "Tech Stack",
     description: "Technologies behind my work",
     children: (
-      <div className="absolute   top-0 right-2 flex justify-start  items-center  flex-col h-full w-full  border-none mask-[linear-gradient(to_top,transparent_1%,#000000_90%)] transition-all duration-300 ease-out group-hover:scale-90">
+      <div className="absolute    top-0 right-2 flex justify-start  items-center  flex-col h-full w-full  border-none mask-[linear-gradient(to_top,transparent_1%,#000000_90%)] transition-all duration-300 ease-out group-hover:scale-90">
         <TechStack />
       </div>
     ),
@@ -64,6 +64,20 @@ const cardData: BentoCardProps[] = [
     color: "#000000",
     title: "Identity",
     description: "A dynamic 3D lanyard symbolizing my personal brand",
+    children: (
+      <div
+        onTouchStart={(e) => {
+          e.stopPropagation();
+        }}
+        onTouchMove={(e) => {
+          e.stopPropagation();
+        }}
+        style={{ touchAction: "none" }}
+        className="absolute   top-0 right-2 flex justify-start  items-center  flex-col h-full w-full  border-none mask-[linear-gradient(to_top,transparent_1%,#000000_90%)] transition-all duration-300 ease-out group-hover:scale-90"
+      >
+        <Lanyard position={[0, 0, 12]} gravity={[0, -40, 0]} />
+      </div>
+    ),
   },
   {
     color: "#000000",
@@ -542,15 +556,20 @@ const BentoCardGrid: React.FC<{
   const childrenArray = React.Children.toArray(children);
 
   return (
-    <div className="card-grid bento-section" ref={gridRef}>
-      <div className="card-column">
-        {childrenArray[0]}
-        {childrenArray[1]}
-      </div>
+    <div className="w-full mt-14 border-t border-b border-zinc-600 flex justify-center items-center">
+      <div
+        className="card-grid bento-section border-gray-600 sm:p-0 p-3.5!   max-w-7xl border-r border-l"
+        ref={gridRef}
+      >
+        <div className="card-column">
+          {childrenArray[0]}
+          {childrenArray[1]}
+        </div>
 
-      <div className="card-column">
-        {childrenArray[2]}
-        {childrenArray[3]}
+        <div className="card-column">
+          {childrenArray[2]}
+          {childrenArray[3]}
+        </div>
       </div>
     </div>
   );

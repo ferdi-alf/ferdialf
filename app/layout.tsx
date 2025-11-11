@@ -33,7 +33,7 @@ export default function RootLayout({
       >
         <div className="relative bg-black flex justify-center items-center">
           <Navbar />
-          <div className="max-w-7xl md:px-0 p-3  w-full">{children}</div>
+          <div className=" md:px-0 p-3  w-full">{children}</div>
         </div>
       </body>
     </html>
