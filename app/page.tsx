@@ -11,7 +11,6 @@ export default function Home() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Trigger fade in saat mount
     setTimeout(() => setIsVisible(true), 50);
 
     const handleScroll = () => {
@@ -70,17 +69,7 @@ export default function Home() {
       <div className=" z-10 bg-[132, 0, 255]  w-full flex items-center mt-24 flex-col">
         <Main />
 
-        <About
-          textAutoHide={true}
-          enableStars={true}
-          enableSpotlight={true}
-          enableBorderGlow={false}
-          enableTilt={true}
-          enableMagnetism={true}
-          clickEffect={true}
-          spotlightRadius={300}
-          particleCount={13}
-        />
+        <About />
         <CareetPath />
       </div>
     </>

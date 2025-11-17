@@ -353,7 +353,7 @@
   }
 
   .kata {
-    font-size: 20px !important;
+    font-size: 19px !important;
   }
 }
 
@@ -809,12 +809,18 @@
 /* about */
 
 .card-grid {
-  display: grid;
-  width: 100%;
+  display: flex;
   gap: 0.5em;
-  padding: 0.75em;
-  max-width: 54em;
+  width: 100%;
   font-size: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
+}
+
+.card-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  flex: 1;
+  min-width: 0;
 }
 
 .magic-bento-card {
@@ -898,131 +904,103 @@
   line-clamp: var(--clamp-desc);
 }
 
-@media (max-width: 599px) {
+.magic-bento-card--border-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 6px;
+  background: radial-gradient(
+    var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+    rgba(255, 255, 255, calc(var(--glow-intensity) * 0.8)) 0%,
+    rgba(255, 255, 255, calc(var(--glow-intensity) * 0.4)) 30%,
+    transparent 60%
+  );
+  border-radius: inherit;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: subtract;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.magic-bento-card--border-glow:hover::after {
+  opacity: 1;
+}
+
+.magic-bento-card--border-glow:hover {
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.4), 0 0 30px var(--purple-glow);
+}
+
+.particle-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.particle::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.particle-container:hover {
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2), 0 0 30px var(--purple-glow);
+}
+
+.global-spotlight {
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  z-index: 200 !important;
+  pointer-events: none;
+}
+
+.bento-section {
+  position: relative;
+  user-select: none;
+}
+
+@media (max-width: 767px) {
   .card-grid {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     width: 90%;
     margin: 0 auto;
-    padding: 0;
+    padding: 0.5em;
   }
 
   .card-column {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
+    width: 100%;
+    flex: none;
   }
 
   .magic-bento-card {
-    aspect-ratio: unset;
-    min-height: unset;
-  }
-
-  .card-column:nth-child(1) .magic-bento-card:nth-child(1),
-  .card-column:nth-child(1) .particle-container:nth-child(1) {
-    height: 150px;
-  }
-
-  .card-column:nth-child(1) .magic-bento-card:nth-child(2),
-  .card-column:nth-child(1) .particle-container:nth-child(2) {
-    height: 500px;
-  }
-
-  .card-column:nth-child(2) .magic-bento-card:nth-child(1),
-  .card-column:nth-child(2) .particle-container:nth-child(1) {
-    height: 700px;
-  }
-
-  .card-column:nth-child(2) .magic-bento-card:nth-child(2),
-  .card-column:nth-child(2) .particle-container:nth-child(2) {
-    height: 180px;
+    min-height: 150px;
   }
 }
 
-@media (min-width: 600px) and (max-width: 1023px) {
+@media (min-width: 768px) {
   .card-grid {
-    grid-template-columns: 1.5fr 1fr; /* Sama seperti desktop */
-    gap: 0.5em;
+    flex-direction: row;
   }
 
   .card-column {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-    height: 600px; /* Disesuaikan untuk tablet, lebih pendek dari desktop (800px) */
+    flex: 1;
   }
 
   .magic-bento-card {
-    aspect-ratio: unset;
-    min-height: unset;
-  }
-
-  /* Kolom kiri: Card 1 (20%) dan Card 2 (80%) */
-  .card-column:nth-child(1) .magic-bento-card:nth-child(1),
-  .card-column:nth-child(1) .particle-container:nth-child(1) {
-    flex: 0 0 120px; /* Lebih kecil dari desktop (150px) */
-  }
-
-  .card-column:nth-child(1) .magic-bento-card:nth-child(2),
-  .card-column:nth-child(1) .particle-container:nth-child(2) {
-    flex: 1;
-  }
-
-  /* Kolom kanan: Card 1 (flex) dan Card 2 (fixed) */
-  .card-column:nth-child(2) .magic-bento-card:nth-child(1),
-  .card-column:nth-child(2) .particle-container:nth-child(1) {
-    flex: 1;
-  }
-
-  .card-column:nth-child(2) .magic-bento-card:nth-child(2),
-  .card-column:nth-child(2) .particle-container:nth-child(2) {
-    flex: 0 0 150px; /* Lebih kecil dari desktop (190px) */
+    min-height: 200px;
   }
 }
 
 @media (min-width: 1024px) {
-  .card-grid {
-    grid-template-columns: 1.5fr 1fr;
-    gap: 0.5em;
-  }
-
-  .card-column {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5em;
-    height: 800px;
-  }
-
   .magic-bento-card {
-    aspect-ratio: unset;
-    min-height: unset;
-  }
-
-  /* Kolom kiri: Card 1 (20%) dan Card 2 (80%) */
-  .card-column:nth-child(1) .magic-bento-card:nth-child(1),
-  .card-column:nth-child(1) .particle-container:nth-child(1) {
-    flex: 0 0 150px; /* 20% = 120px dari 600px */
-  }
-
-  .card-column:nth-child(1) .magic-bento-card:nth-child(2),
-  .card-column:nth-child(1) .particle-container:nth-child(2) {
-    flex: 1;
-  }
-
-  .card-column:nth-child(2) .magic-bento-card:nth-child(1),
-  .card-column:nth-child(2) .particle-container:nth-child(1) {
-    flex: 1;
-  }
-
-  .card-column:nth-child(2) .magic-bento-card:nth-child(2),
-  .card-column:nth-child(2) .particle-container:nth-child(2) {
-    flex: 0 0 190px;
-  }
-}
-
-@media (min-width: 345px) and (max-width: 598px) {
-  .card-column:nth-child(1) .magic-bento-card:nth-child(2),
-  .card-column:nth-child(1) .particle-container:nth-child(2) {
-    height: 450px;
+    min-height: 570px;
   }
 }
 

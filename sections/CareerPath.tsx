@@ -1,15 +1,10 @@
-import ShinyText from "@/components/ShinyText";
+import SectionLayout from "@/components/layouts/SectionLayout";
 
 const CareetPath = () => {
   return (
-    <div className="flex justify-center items-center mt-20">
-      <ShinyText
-        text="Career Path"
-        disabled={false}
-        speed={2.5}
-        className="text-5xl font-bold"
-      />
-    </div>
+    <SectionLayout title="Career Path">
+      <p>Hello Word</p>
+    </SectionLayout>
   );
 };
 

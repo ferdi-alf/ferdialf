@@ -357,7 +357,7 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
       style={cardStyle}
     >
       {behindGlowEnabled && <div className="pc-behind " />}
-      <div ref={shellRef} className="pc-card-shell   md:pl-[20em] lg:pl-[24em]">
+      <div ref={shellRef} className="pc-card-shell   md:pl-[20em]">
         <section className="pc-card">
           <div className="pc-inside">
             <div className="pc-shine" />
