@@ -48,7 +48,7 @@ const cardData: BentoCardProps[] = [
   {
     color: "#000000",
     title: "Connect",
-    description: "Reach out or follow my work",
+    description: "Click on the logo to follow",
     children: (
       <div className="absolute   top-0 right-2 flex justify-start  items-center  flex-col h-full w-full  border-none mask-[linear-gradient(to_top,transparent_1%,#000000_90%)] transition-all duration-300 ease-out group-hover:scale-90">
         <Connect />

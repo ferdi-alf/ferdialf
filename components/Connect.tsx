@@ -238,11 +238,13 @@ export default function Connect({ className }: { className?: string }) {
 
       {freelancePlatforms.map((_, index) => (
         <AnimatedBeam
-          pathColor="#fff"
           key={`beam-freelance-${index}`}
           containerRef={containerRef}
           fromRef={{ current: freelanceRefs.current[index] }}
           toRef={centerRef}
+          pathColor="white"
+          pathWidth={2}
+          duration={3}
         />
       ))}
 
