@@ -3,13 +3,13 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import BeamGridBackground from "@/components/lightswind/beam-grid-background";
 import About from "@/sections/About";
-import CareetPath from "@/sections/CareerPath";
 import Main from "@/sections/Main";
 import { DotBackground } from "@/components/lightswind/grid-dot-backgrounds";
+import Journey from "@/sections/Journey";
+import TechStackConvergence from "@/sections/TechStack";
 
-const TOTAL = 3;
+const TOTAL = 4;
 
-// Animasi slide atas-bawah
 const variants = {
   enter: (dir: number) => ({
     y: dir > 0 ? "100%" : "-100%",
@@ -26,7 +26,7 @@ const variants = {
 };
 
 const transition = {
-  duration: 0.6,
+  duration: 0.45,
   ease: [0.76, 0, 0.24, 1] as [number, number, number, number],
 };
 
@@ -173,7 +173,12 @@ export default function Home() {
 
           {page === 2 && (
             <div className="min-h-screen bg-zinc-950 flex justify-center items-start pt-24 pb-20">
-              <CareetPath />
+              <Journey containerRef={sectionRef} />
+            </div>
+          )}
+          {page === 3 && (
+            <div className="min-h-screen bg-zinc-950 w-full flex justify-center items-start  pt-20 pb-20">
+              <TechStackConvergence />
             </div>
           )}
         </motion.div>

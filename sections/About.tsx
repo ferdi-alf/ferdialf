@@ -34,10 +34,13 @@ const journeyItems = [
 ];
 
 const socials = [
-  { label: "GitHub", href: "#" },
-  { label: "LinkedIn", href: "#" },
-  { label: "Instagram", href: "#" },
-  { label: "Email", href: "#" },
+  { label: "GitHub", href: "https://github.com/ferdi-alf" },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/muhammad-ferdi-alfian-979273396?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
+  },
+  { label: "Instagram", href: "https://www.instagram.com/eternalferr_" },
+  { label: "Email", href: "mailto:ferdialf.dev@gmail.com" },
 ];
 
 const About = () => {
@@ -68,8 +71,8 @@ const About = () => {
             </h3>
             <p className="mt-2 text-sm text-zinc-400 leading-relaxed max-w-sm">
               Started in vocational school, shipping production code for real
-              clients. Every project added a layer — now I'm leveling up through
-              formal education while staying active in freelance.
+              clients. Every project added a layer — now I&apos;m leveling up
+              through formal education while staying active in freelance.
             </p>
           </div>
 
@@ -112,7 +115,9 @@ const About = () => {
             </div>
 
             <div>
-              <h3 className="text-lg font-bold text-white">Let's Connect</h3>
+              <h3 className="text-lg font-bold text-white">
+                Let&apos;s Connect
+              </h3>
               <p className="mt-1 text-xs text-zinc-500">
                 Open to collaborations, freelance projects, and new
                 opportunities.
