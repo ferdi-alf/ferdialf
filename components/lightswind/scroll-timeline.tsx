@@ -237,11 +237,8 @@ export const ScrollTimeline = ({
             className={cn(getConnectorClasses(), "h-full absolute top-0 z-10")}
           ></div>
 
-          {/* === MODIFICATION START === */}
-          {/* Enhanced Progress Indicator with Traveling Glow */}
           {progressIndicator && (
             <>
-              {/* The main filled progress line */}
               <motion.div
                 className="absolute top-0 z-10"
                 style={{
@@ -251,21 +248,19 @@ export const ScrollTimeline = ({
                   transform: "translateX(-50%)",
                   borderRadius: progressLineCap === "round" ? "9999px" : "0px",
                   background: `linear-gradient(to bottom, #22d3ee, #6366f1, #a855f7)`,
-                  // Enhanced shadow for a constant glow effect along the path
                   boxShadow: `
                     0 0 15px rgba(99,102,241,0.5),
                     0 0 25px rgba(168,85,247,0.3)
                   `,
                 }}
               />
-              {/* The traveling glow "comet" at the head of the line */}
               <motion.div
                 className="absolute z-20"
                 style={{
                   top: progressHeight,
                   left: "50%",
                   translateX: "-50%",
-                  translateY: "-50%", // Center the comet on the line's end point
+                  translateY: "-50%",
                 }}
               >
                 <motion.div
@@ -292,7 +287,6 @@ export const ScrollTimeline = ({
               </motion.div>
             </>
           )}
-          {/* === MODIFICATION END === */}
 
           <div className="relative z-20">
             {events.map((event, index) => {
@@ -360,8 +354,26 @@ export const ScrollTimeline = ({
                     viewport={{ once: false, margin: "-100px" }}
                     style={parallaxIntensity > 0 ? { y: yOffset } : undefined}
                   >
-                    <Card className="bg-background border">
-                      <CardContent className="p-6">
+                    <div
+                      style={{
+                        filter:
+                          "drop-shadow(0 8px 32px rgba(0,0,0,0.6)) drop-shadow(0 2px 8px rgba(0,0,0,0.5))",
+                        background:
+                          "linear-gradient(145deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 40%, rgba(0,0,0,0.65) 100%)",
+                        padding: "1px",
+                        borderRadius: 16,
+                      }}
+                    >
+                      <div
+                        style={{
+                          borderRadius: 15,
+                          background:
+                            "linear-gradient(160deg, rgba(45,45,48,0.97) 0%, rgba(18,18,20,0.99) 55%, rgba(8,8,10,1) 100%)",
+                          boxShadow:
+                            "inset 0 1px 0 rgba(255,255,255,0.12), inset 1px 0 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.6), inset -1px 0 0 rgba(0,0,0,0.4)",
+                          padding: "1.5rem",
+                        }}
+                      >
                         {dateFormat === "badge" ? (
                           <div className="flex items-center mb-2">
                             {event.icon || (
@@ -383,19 +395,17 @@ export const ScrollTimeline = ({
                             {event.year}
                           </p>
                         )}
-                        <h3 className="text-xl font-bold mb-1">
+                        <h3 className="text-xl font-bold mb-1 text-white">
                           {event.title}
                         </h3>
                         {event.subtitle && (
-                          <p className="text-muted-foreground font-medium mb-2">
+                          <p className="text-zinc-400 font-medium mb-2">
                             {event.subtitle}
                           </p>
                         )}
-                        <p className="text-muted-foreground">
-                          {event.description}
-                        </p>
-                      </CardContent>
-                    </Card>
+                        <p className="text-zinc-500">{event.description}</p>
+                      </div>
+                    </div>
                   </motion.div>
                 </div>
               );

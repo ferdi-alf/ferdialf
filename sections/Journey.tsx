@@ -37,7 +37,7 @@ export default function Journey({ containerRef }: JourneyProps) {
         events={data.events}
         animationOrder="sequential"
         cardAlignment="alternating"
-        revealAnimation="none"
+        revealAnimation="scale"
         cardVariant="elevated"
         cardEffect="glow"
         connectorStyle="dashed"

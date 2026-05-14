@@ -14,10 +14,61 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Muhammad Ferdi Alfian",
-  description: "Portofolio Muhammad Ferdi Alfian",
-  keywords:
-    "Muhammad Ferdi Alfian, muhammad ferdi alfian portofolio, web developer, jasa web developer, programmer",
+  metadataBase: new URL("https://ferdialf.vercel.app"),
+  title: {
+    default: "Muhammad Ferdi Alfian | Fullstack Developer",
+    template: "%s | Muhammad Ferdi Alfian",
+  },
+  description:
+    "Fullstack web developer from Indonesia. Specialized in Next.js, Golang, and scalable web systems.",
+  keywords: [
+    "Muhammad Ferdi Alfian",
+    "Freelance Developer",
+    "Web Developer Indonesia",
+    "Web Developer",
+    "Web Development",
+    "Fullstack Developer",
+    "Fullstack Web Developer",
+    "Web Engineer",
+    "Next.js Developer",
+    "Golang Developer",
+    "Software Engineer",
+    "Web Application Developer",
+    "React Developer",
+    "Node.js Developer",
+    "Frontend Developer",
+    "Backend Developer",
+    "Open Source Contributor",
+    "App Developer",
+  ],
+  authors: [{ name: "Muhammad Ferdi Alfian" }],
+  openGraph: {
+    title: "Muhammad Ferdi Alfian | Fullstack Developer",
+    description:
+      "Fullstack developer building scalable web applications with Next.js and Golang.",
+    url: "https://ferdialf.vercel.app",
+    siteName: "Muhammad Ferdi Alfian",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1000,
+        height: 1000,
+        alt: "Muhammad Ferdi Alfian Portfolio Preview",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Muhammad Ferdi Alfian | Fullstack Developer",
+    description: "Fullstack developer specializing in modern web architecture.",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -26,7 +77,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className="dark">
+    <html lang="en" className="dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-950`}
       >

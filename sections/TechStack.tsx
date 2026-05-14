@@ -295,41 +295,82 @@ const CenterLogo = forwardRef<HTMLDivElement>((_, ref) => (
         inset: -24,
         borderRadius: "50%",
         background:
-          "radial-gradient(circle, rgba(0,180,255,0.18) 0%, transparent 70%)",
+          "radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 70%)",
       }}
-      animate={{ opacity: [0.4, 1, 0.4], scale: [1, 1.08, 1] }}
+      animate={{ opacity: [0.3, 0.8, 0.3], scale: [1, 1.08, 1] }}
       transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
     />
 
     <motion.div
+      animate={{ opacity: [0.75, 1, 0.75] }}
+      transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
       style={{
         width: 80,
         height: 80,
         borderRadius: "50%",
+        padding: "1.5px",
         background:
-          "linear-gradient(135deg, oklch(87.1% 0.006 286.286), rgba(0,30,80,0.95))",
-        border: "1px solid rgba(0,200,255,0.5)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+          "linear-gradient(145deg, rgba(255,255,255,0.30) 0%, rgba(180,180,180,0.08) 45%, rgba(0,0,0,0.65) 100%)",
         boxShadow:
-          "0 0 30px rgba(0,150,255,0.4), 0 0 60px rgba(0,100,255,0.2), inset 0 1px 0 rgba(255,255,255,0.2)",
+          "0 8px 28px rgba(0,0,0,0.7), 0 2px 6px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.1)",
+        filter:
+          "drop-shadow(0 6px 18px rgba(0,0,0,0.65)) drop-shadow(0 1px 3px rgba(0,0,0,0.85))",
         position: "relative",
         zIndex: 10,
       }}
-      animate={{ opacity: [0.7, 1, 0.7] }}
-      transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
     >
-      <span style={{ fontSize: 32 }}>
-        <Image
-          alt="Muhammad Ferdi Alfian - Logo"
-          width={200}
-          height={200}
-          loading="lazy"
-          className="w-12 rounded-full h-12"
-          src="/images/logo.PNG"
-        />
-      </span>
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          borderRadius: "50%",
+          background:
+            "linear-gradient(160deg, rgba(50,50,52,0.95) 0%, rgba(15,15,16,0.98) 60%, rgba(8,8,9,1) 100%)",
+          boxShadow:
+            "inset 0 1px 0 rgba(255,255,255,0.13), inset 1px 0 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.55), inset -1px 0 0 rgba(0,0,0,0.4)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            filter:
+              "drop-shadow(0 3px 8px rgba(0,0,0,0.8)) drop-shadow(0 1px 2px rgba(0,0,0,1))",
+          }}
+        >
+          <div
+            style={{
+              padding: "1.5px",
+              borderRadius: 10,
+              background:
+                "linear-gradient(145deg, rgba(255,255,255,0.32) 0%, rgba(160,160,160,0.08) 50%, rgba(0,0,0,0.55) 100%)",
+              boxShadow:
+                "0 2px 8px rgba(0,0,0,0.7), 0 1px 2px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.1)",
+            }}
+          >
+            <div
+              style={{
+                borderRadius: 8.5,
+                overflow: "hidden",
+                background: "#0a0a0a",
+                boxShadow: "inset 0 1px 3px rgba(0,0,0,0.8)",
+              }}
+            >
+              <Image
+                alt="Muhammad Ferdi Alfian - Logo"
+                width={200}
+                height={200}
+                loading="eager"
+                className="w-11 h-11 block"
+                src="/images/icon.PNG"
+                style={{ display: "block" }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </motion.div>
   </div>
 ));
@@ -343,17 +384,17 @@ export function TechStackConvergence({
   const containerRef = useRef<HTMLDivElement>(null);
   const centerRef = useRef<HTMLDivElement>(null);
 
-  const refL1 = useRef<HTMLDivElement>(null); // JavaScript
-  const refL2 = useRef<HTMLDivElement>(null); // Golang
-  const refL3 = useRef<HTMLDivElement>(null); // PHP
-  const refL4 = useRef<HTMLDivElement>(null); // Git
-  const refL5 = useRef<HTMLDivElement>(null); // Redis
+  const refL1 = useRef<HTMLDivElement>(null);
+  const refL2 = useRef<HTMLDivElement>(null);
+  const refL3 = useRef<HTMLDivElement>(null);
+  const refL4 = useRef<HTMLDivElement>(null);
+  const refL5 = useRef<HTMLDivElement>(null);
 
-  const refR1 = useRef<HTMLDivElement>(null); // Next.JS
-  const refR2 = useRef<HTMLDivElement>(null); // Fiber
-  const refR3 = useRef<HTMLDivElement>(null); // Laravel
-  const refR4 = useRef<HTMLDivElement>(null); // GitHub
-  const refR5 = useRef<HTMLDivElement>(null); // Docker
+  const refR1 = useRef<HTMLDivElement>(null);
+  const refR2 = useRef<HTMLDivElement>(null);
+  const refR3 = useRef<HTMLDivElement>(null);
+  const refR4 = useRef<HTMLDivElement>(null);
+  const refR5 = useRef<HTMLDivElement>(null);
 
   const leftTechs: TechItem[] = [
     {
@@ -669,21 +710,21 @@ export function TechStackConvergence({
   ];
 
   const leftBeamColors = [
-    { start: "#fff085", stop: "oklch(85.2% 0.199 91.936)" }, // JS  → kuning
-    { start: "oklch(91.7% 0.08 205.041)", stop: "oklch(78.9% 0.154 211.53)" }, // Go  → cyan
-    { start: "oklch(45.7% 0.24 277.023)", stop: "oklch(35.9% 0.144 278.697)" }, // PHP → indigo
-    { start: "#f05033", stop: "#cc2900" }, // Git → oranye-merah
-    { start: "#ff6b6b", stop: "#cc0000" }, // Redis → merah
-    { start: "#38bdf8", stop: "#0ea5e9" }, // Tailwind → biru muda
+    { start: "#fff085", stop: "oklch(85.2% 0.199 91.936)" },
+    { start: "oklch(91.7% 0.08 205.041)", stop: "oklch(78.9% 0.154 211.53)" },
+    { start: "oklch(45.7% 0.24 277.023)", stop: "oklch(35.9% 0.144 278.697)" },
+    { start: "#f05033", stop: "#cc2900" },
+    { start: "#ff6b6b", stop: "#cc0000" },
+    { start: "#38bdf8", stop: "#0ea5e9" },
   ];
 
   const rightBeamColors = [
-    { start: "#e4e4e7", stop: "#9f9fa9" }, // Next.JS → abu-abu
-    { start: "oklch(68.5% 0.169 237.323)", stop: "oklch(58.8% 0.158 241.966)" }, // Fiber → biru Go
-    { start: "oklch(80.8% 0.114 19.571)", stop: "oklch(70.4% 0.191 22.216)" }, // Laravel → merah
-    { start: "#d4d4d4", stop: "#a3a3a3" }, // GitHub → abu (hitam/netral)
-    { start: "#2496ed", stop: "#1a6eb5" }, // Docker → biru Docker
-    { start: "#e4e4e7", stop: "#9f9fa9" }, // Shadcn → abu (hitam/netral)
+    { start: "#e4e4e7", stop: "#9f9fa9" },
+    { start: "oklch(68.5% 0.169 237.323)", stop: "oklch(58.8% 0.158 241.966)" },
+    { start: "oklch(80.8% 0.114 19.571)", stop: "oklch(70.4% 0.191 22.216)" },
+    { start: "#d4d4d4", stop: "#a3a3a3" },
+    { start: "#2496ed", stop: "#1a6eb5" },
+    { start: "#e4e4e7", stop: "#9f9fa9" },
   ];
 
   const leftCurvatures = [80, 50, 20, 0, -20, -50, -80];
@@ -728,7 +769,6 @@ export function TechStackConvergence({
             <IconCircle key={i} ref={t.ref} icon={t.icon} label={t.label} />
           ))}
         </div>
-
         <div
           className="relative flex items-center justify-center"
           style={{ width: 200, height: 200 }}
@@ -736,9 +776,33 @@ export function TechStackConvergence({
           <OrbitRing
             radius={60}
             duration={8}
-            color="#00d4ff"
-            opacity={0.6}
+            color="#94A3B8"
+            opacity={0.55}
             dotSize={4}
+          >
+            <div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: "50%",
+                transform: "translateX(-50%)",
+                width: 5,
+                height: 5,
+                borderRadius: "50%",
+                background: "#F1F5F9",
+                boxShadow:
+                  "0 0 8px 3px rgba(241,245,249,0.9), 0 0 18px 5px rgba(148,163,184,0.35)",
+              }}
+            />
+          </OrbitRing>
+
+          <OrbitRing
+            radius={80}
+            duration={12}
+            reverse
+            color="#475569"
+            opacity={0.4}
+            dotSize={3}
           >
             <div
               style={{
@@ -749,31 +813,9 @@ export function TechStackConvergence({
                 width: 4,
                 height: 4,
                 borderRadius: "50%",
-                background: "#0066ff",
-                boxShadow: "0 0 6px 2px #0066ff",
-              }}
-            />
-          </OrbitRing>
-
-          <OrbitRing
-            radius={80}
-            duration={12}
-            reverse
-            color="#0088ff"
-            opacity={0.4}
-            dotSize={3}
-          >
-            <div
-              style={{
-                position: "absolute",
-                bottom: 0,
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: 3,
-                height: 3,
-                borderRadius: "50%",
-                background: "#00ffcc",
-                boxShadow: "0 0 5px 2px #00ffcc",
+                background: "#CBD5E1",
+                boxShadow:
+                  "0 0 6px 2px rgba(203,213,225,0.75), 0 0 14px 4px rgba(71,85,105,0.3)",
               }}
             />
           </OrbitRing>
@@ -784,7 +826,7 @@ export function TechStackConvergence({
               width: 180,
               height: 180,
               borderRadius: "50%",
-              border: "2px dashed oklch(55.2% 0.016 285.938)",
+              border: "1.5px dashed rgba(148,163,184,0.28)",
             }}
             animate={{ rotate: 360 }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
@@ -796,16 +838,15 @@ export function TechStackConvergence({
               width: 140,
               height: 140,
               borderRadius: "50%",
-              border: "1px dashed oklch(52% 0.105 223.128)",
+              border: "1px dashed rgba(100,116,139,0.2)",
             }}
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            animate={{ rotate: -360 }}
+            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
           />
 
           <CenterLogo ref={centerRef} />
         </div>
 
-        {/* ── Left beams (all 7) ── */}
         {(leftRefs as RefObject<HTMLDivElement | null>[]).map((r, i) => (
           <AnimatedBeam
             key={`L${i}`}
@@ -821,7 +862,6 @@ export function TechStackConvergence({
           />
         ))}
 
-        {/* ── Right beams (all 7) ── */}
         {(rightRefs as RefObject<HTMLDivElement | null>[]).map((r, i) => (
           <AnimatedBeam
             key={`R${i}`}
@@ -839,7 +879,6 @@ export function TechStackConvergence({
         ))}
       </div>
 
-      {/* ── Footer label ── */}
       <div
         style={{
           position: "absolute",

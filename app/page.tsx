@@ -9,6 +9,7 @@ import Journey from "@/sections/Journey";
 import TechStackConvergence from "@/sections/TechStack";
 
 const TOTAL = 4;
+const COOLDOWN_MS = 600; // jeda setelah animasi selesai sebelum bisa navigate lagi
 
 const variants = {
   enter: (dir: number) => ({
@@ -34,12 +35,15 @@ export default function Home() {
   const [page, setPage] = useState(0);
   const [dir, setDir] = useState(1);
   const animating = useRef(false);
+  const cooldownUntil = useRef(0); // timestamp kapan cooldown selesai
   const sectionRef = useRef<HTMLDivElement>(null);
 
   const navigate = useCallback(
     (next: number) => {
-      if (animating.current || next === page || next < 0 || next >= TOTAL)
-        return;
+      if (animating.current) return;
+      if (Date.now() < cooldownUntil.current) return; // blok selama cooldown
+      if (next === page || next < 0 || next >= TOTAL) return;
+
       setDir(next > page ? 1 : -1);
       setPage(next);
       animating.current = true;
@@ -47,9 +51,16 @@ export default function Home() {
     [page],
   );
 
+  const handleAnimationComplete = useCallback(() => {
+    animating.current = false;
+    cooldownUntil.current = Date.now() + COOLDOWN_MS; // mulai cooldown
+  }, []);
+
   useEffect(() => {
     const onWheel = (e: WheelEvent) => {
       if (animating.current) return;
+      if (Date.now() < cooldownUntil.current) return;
+
       const el = sectionRef.current;
       if (!el) return;
 
@@ -77,12 +88,16 @@ export default function Home() {
     };
     const onTouchEnd = (e: TouchEvent) => {
       if (animating.current) return;
+      if (Date.now() < cooldownUntil.current) return;
+
       const diff = startY - e.changedTouches[0].clientY;
       if (Math.abs(diff) < 60) return;
+
       const el = sectionRef.current;
       const atTop = !el || el.scrollTop <= 0;
       const atBottom =
         !el || Math.ceil(el.scrollTop + el.clientHeight) >= el.scrollHeight;
+
       if (diff > 0 && atBottom) navigate(page + 1);
       if (diff < 0 && atTop) navigate(page - 1);
     };
@@ -96,6 +111,7 @@ export default function Home() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (Date.now() < cooldownUntil.current) return;
       if (e.key === "ArrowDown" || e.key === "PageDown") navigate(page + 1);
       if (e.key === "ArrowUp" || e.key === "PageUp") navigate(page - 1);
     };
@@ -115,9 +131,7 @@ export default function Home() {
           animate="center"
           exit="exit"
           transition={transition}
-          onAnimationComplete={() => {
-            animating.current = false;
-          }}
+          onAnimationComplete={handleAnimationComplete} // ← pakai handler baru
           className="absolute inset-0 overflow-y-auto overflow-x-hidden"
         >
           {page === 0 && (
@@ -140,7 +154,6 @@ export default function Home() {
                 showFade={false}
                 className="bg-zinc-950!"
               />
-
               <div
                 className="absolute inset-0 z-1 pointer-events-none"
                 style={{
@@ -148,7 +161,6 @@ export default function Home() {
                     "radial-gradient(ellipse at center, transparent 35%, rgba(9,9,11,0.65) 45%, rgba(9,9,11,0.97) 100%)",
                 }}
               />
-
               <div className="relative z-10 flex items-center justify-center mt-16 h-[calc(100vh-4rem)]">
                 <Main />
               </div>
@@ -165,7 +177,7 @@ export default function Home() {
               fadeIntensity={25}
               className="min-h-screen w-full"
             >
-              <div className="flex  justify-center items-start min-h-screen px-1.5 sm:py-16 py-5">
+              <div className="flex justify-center items-start min-h-screen px-1.5 sm:py-16 py-5">
                 <About />
               </div>
             </DotBackground>
@@ -176,8 +188,9 @@ export default function Home() {
               <Journey containerRef={sectionRef} />
             </div>
           )}
+
           {page === 3 && (
-            <div className="min-h-screen bg-zinc-950 w-full flex justify-center items-start  pt-20 pb-20">
+            <div className="min-h-screen bg-zinc-950 w-full flex justify-center items-start pt-20 pb-20">
               <TechStackConvergence />
             </div>
           )}
