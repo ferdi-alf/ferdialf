@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from "react";
 
 interface ShineButtonProps {
@@ -6,7 +5,7 @@ interface ShineButtonProps {
   onClick?: () => void;
   className?: string;
   size?: "sm" | "md" | "lg";
-  bgColor?: string; // Can be hex or gradient
+  bgColor?: string;
 }
 
 const sizeStyles: Record<
@@ -23,11 +22,10 @@ export const ShineButton: React.FC<ShineButtonProps> = ({
   onClick,
   className = "",
   size = "md",
-  bgColor = "linear-gradient(325deg, hsl(217 100% 56%) 0%, hsl(194 100% 69%) 55%, hsl(217 100% 56%) 90%)",
+  bgColor = "linear-gradient(325deg, hsl(0 0% 18%) 0%, hsl(0 0% 32%) 50%, hsl(0 0% 14%) 100%)",
 }) => {
   const { padding, fontSize } = sizeStyles[size];
 
-  // Determine whether to use solid color or gradient
   const backgroundImage = bgColor.startsWith("linear-gradient")
     ? bgColor
     : `linear-gradient(to right, ${bgColor}, ${bgColor})`;
@@ -35,10 +33,10 @@ export const ShineButton: React.FC<ShineButtonProps> = ({
   return (
     <button
       onClick={onClick}
-      className={`relative text-white font-medium rounded-md min-w-[120px] min-h-[44px] transition-all duration-700 ease-in-out
-        border-none cursor-pointer shadow-[0px_0px_20px_rgba(71,184,255,0.5),0px_5px_5px_-1px_rgba(58,125,233,0.25),inset_4px_4px_8px_rgba(175,230,255,0.5),inset_-4px_-4px_8px_rgba(19,95,216,0.35)]
-        focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-500
-        hover:bg-[length:280%_auto] active:scale-95 ${className}`}
+      className={`relative text-white font-medium rounded-md min-w-[120px] min-h-[44px]
+        border-none cursor-pointer
+        focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-transparent
+        active:scale-95 overflow-hidden group ${className}`}
       style={{
         backgroundImage,
         backgroundSize: "280% auto",
@@ -46,22 +44,30 @@ export const ShineButton: React.FC<ShineButtonProps> = ({
         color: "hsl(0 0% 100%)",
         fontSize,
         padding,
-        transition: "0.8s",
+        transition: "background-position 0.8s ease, transform 0.15s ease",
+        /* Neutral 3D shadow — no blue */
+        boxShadow: [
+          "0px 0px 18px rgba(255,255,255,0.08)",
+          "0px 4px 8px -2px rgba(0,0,0,0.5)",
+          "inset 0px 1px 0px rgba(255,255,255,0.18)",
+          "inset 0px -1px 0px rgba(0,0,0,0.4)",
+        ].join(", "),
       }}
-      onMouseEnter={(e) =>
-        ((e.target as HTMLButtonElement).style.backgroundPosition = "right top")
-      }
-      onMouseLeave={(e) =>
-        ((e.target as HTMLButtonElement).style.backgroundPosition = "initial")
-      }
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLButtonElement).style.backgroundPosition =
+          "right top";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLButtonElement).style.backgroundPosition =
+          "initial";
+      }}
     >
       {label}
 
-      {/* Shine effect */}
-      <div
-        className="absolute top-0 left-[-75%] w-[200%] 
-      h-full bg-white/40 skew-x-[-20deg] opacity-0 
-      group-hover:opacity-100 animate-shine pointer-events-none z-20"
+      {/* Shine sweep effect */}
+      <span
+        className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-20deg]
+          bg-white/20 group-hover:translate-x-[200%] transition-transform duration-700 ease-in-out"
       />
     </button>
   );

@@ -4,8 +4,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useInView } from "framer-motion";
 
-export interface InteractiveGridBackgroundProps
-  extends React.HTMLProps<HTMLDivElement> {
+export interface InteractiveGridBackgroundProps extends React.HTMLProps<HTMLDivElement> {
   gridSize?: number;
   gridColor?: string;
   darkGridColor?: string;
@@ -23,7 +22,9 @@ export interface InteractiveGridBackgroundProps
   idleRandomCount?: number; // ✅ how many random cells move during idle
 }
 
-export const InteractiveGridBackground: React.FC<InteractiveGridBackgroundProps> = ({
+export const InteractiveGridBackground: React.FC<
+  InteractiveGridBackgroundProps
+> = ({
   gridSize = 50,
   gridColor = "transparent",
   darkGridColor = "transparent",
@@ -66,7 +67,7 @@ export const InteractiveGridBackground: React.FC<InteractiveGridBackgroundProps>
         window.matchMedia &&
         window.matchMedia("(prefers-color-scheme: dark)").matches;
       setIsDarkMode(
-        document.documentElement.classList.contains("dark") || prefersDark
+        document.documentElement.classList.contains("dark") || prefersDark,
       );
     };
     updateDarkMode();
@@ -239,7 +240,7 @@ export const InteractiveGridBackground: React.FC<InteractiveGridBackgroundProps>
 
       {showFade && (
         <div
-          className="pointer-events-none absolute inset-0 bg-white dark:bg-black"
+          className="pointer-events-none absolute inset-0 bg-white dark:bg-zinc-950"
           style={{
             maskImage: `radial-gradient(ellipse at center, transparent ${fadeIntensity}%, black)`,
             WebkitMaskImage: `radial-gradient(ellipse at center, transparent ${fadeIntensity}%, black)`,

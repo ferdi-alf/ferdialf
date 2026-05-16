@@ -7,8 +7,10 @@ import Main from "@/sections/Main";
 import { DotBackground } from "@/components/lightswind/grid-dot-backgrounds";
 import Journey from "@/sections/Journey";
 import TechStackConvergence from "@/sections/TechStack";
+import ProjectsSection from "@/sections/Projects";
+import InteractiveGridBackground from "@/components/lightswind/interactive-grid-background";
 
-const TOTAL = 4;
+const TOTAL = 7;
 const COOLDOWN_MS = 600; // jeda setelah animasi selesai sebelum bisa navigate lagi
 
 const variants = {
@@ -193,6 +195,23 @@ export default function Home() {
             <div className="min-h-screen bg-zinc-950 w-full flex justify-center items-start pt-20 pb-20">
               <TechStackConvergence />
             </div>
+          )}
+          {page === 4 && (
+            <InteractiveGridBackground
+              gridSize={40}
+              gridColor="#d1d5db"
+              darkGridColor="#1f2937"
+              trailLength={5}
+              glow
+              glowRadius={30}
+              showFade
+              fadeIntensity={1}
+              className="bg-zinc-950!"
+            >
+              <div className="min-h-screen w-full flex justify-center items-start pt-20 pb-20">
+                <ProjectsSection />
+              </div>
+            </InteractiveGridBackground>
           )}
         </motion.div>
       </AnimatePresence>

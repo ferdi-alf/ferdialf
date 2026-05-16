@@ -14,6 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/favicon.ico",
+  },
   metadataBase: new URL("https://ferdialf.vercel.app"),
   title: {
     default: "Muhammad Ferdi Alfian | Fullstack Developer",

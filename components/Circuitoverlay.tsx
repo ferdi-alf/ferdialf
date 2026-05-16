@@ -568,7 +568,7 @@ function PulseBeam({
   const headEnd = tailEnd - headAdvance;
 
   // Jeda antar pulse (saat beam off-screen)
-  const repeatDelay = duration * 1;
+  const repeatDelay = 0.8;
 
   const baseTransition = {
     duration,

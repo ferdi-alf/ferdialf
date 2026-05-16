@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { motion } from "framer-motion";
@@ -14,7 +13,7 @@ export interface MarqueeImage {
 export interface ThreeDMarqueeProps {
   images: MarqueeImage[];
   className?: string;
-  cols?: number; // default is 4
+  cols?: number;
   onImageClick?: (image: MarqueeImage, index: number) => void;
 }
 
@@ -24,12 +23,11 @@ export const ThreeDMarquee: React.FC<ThreeDMarqueeProps> = ({
   cols = 4,
   onImageClick,
 }) => {
-  // Clone the image list twice
-  const duplicatedImages = [...images, ...images];
+  const duplicatedImages = [...images, ...images, ...images];
 
   const groupSize = Math.ceil(duplicatedImages.length / cols);
-  const imageGroups = Array.from({ length: cols }, (_, index) =>
-    duplicatedImages.slice(index * groupSize, (index + 1) * groupSize)
+  const imageGroups = Array.from({ length: cols }, (_, i) =>
+    duplicatedImages.slice(i * groupSize, (i + 1) * groupSize),
   );
 
   const handleImageClick = (image: MarqueeImage, globalIndex: number) => {
@@ -41,59 +39,79 @@ export const ThreeDMarquee: React.FC<ThreeDMarqueeProps> = ({
   };
 
   return (
+    /*
+     * overflow-hidden clips the scaled+rotated content to the card bounds.
+     * bg-transparent — no white background leaks through.
+     */
     <section
-      className={`mx-auto block h-[600px] max-sm:h-[400px] 
-        overflow-hidden rounded-2xl bg-white dark:bg-black ${className}`}
+      className={`w-full h-full overflow-hidden bg-transparent ${className}`}
     >
+      {/*
+       * This wrapper applies the isometric 3D transform.
+       *
+       * Key fix: we combine rotateX/Z with scale(1.6) inside one `transform`
+       * declaration so the scaled-up grid fills the card after perspective
+       * distortion shrinks the visible area.
+       *
+       * translateX(-8%) + translateY(-8%) re-centers the content after
+       * the rotation shifts its visual center off to one side.
+       * Tune these two values if it still looks off-center.
+       */}
       <div
-        className="flex w-full h-full items-center justify-center"
+        className="w-full h-full flex items-center justify-center"
         style={{
-          transform: "rotateX(55deg) rotateY(0deg) rotateZ(45deg)",
+          transform:
+            "rotateX(55deg) rotateZ(45deg) scale(1.55) translateX(-4%) translateY(-4%)",
+          transformOrigin: "center center",
         }}
       >
-        <div className="w-full overflow-hidden scale-90 sm:scale-100">
-          <div
-            className={`relative grid h-full w-full origin-center 
-              grid-cols-2 sm:grid-cols-${cols} gap-4 transform 
-              `}
-          >
-            {imageGroups.map((imagesInGroup, idx) => (
-              <motion.div
-                key={`column-${idx}`}
-                animate={{ y: idx % 2 === 0 ? 100 : -100 }}
-                transition={{
-                  duration: idx % 2 === 0 ? 10 : 15,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                }}
-                className="flex flex-col items-center gap-6 relative"
-              >
-                <div className="absolute left-0 top-0 h-full w-0.5 bg-gray-200 dark:bg-gray-700" />
-                {imagesInGroup.map((image, imgIdx) => {
-                  const globalIndex = idx * groupSize + imgIdx;
-                  const isClickable = image.href || onImageClick;
+        <div
+          className="relative grid w-full gap-3"
+          style={{
+            gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+          }}
+        >
+          {imageGroups.map((imagesInGroup, idx) => (
+            <motion.div
+              key={`column-${idx}`}
+              /*
+               * Larger y range → columns travel all the way to card edges.
+               * Even/odd columns go opposite directions for the interleaved
+               * scroll effect.
+               */
+              animate={{ y: idx % 2 === 0 ? 240 : -240 }}
+              transition={{
+                duration: idx % 2 === 0 ? 12 : 17,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "linear",
+              }}
+              className="flex flex-col gap-3"
+            >
+              {imagesInGroup.map((image, imgIdx) => {
+                const globalIndex = idx * groupSize + imgIdx;
+                const isClickable = image.href || onImageClick;
 
-                  return (
-                    <div key={`img-${imgIdx}`} className="relative">
-                      <div className="absolute top-0 left-0 w-full h-0.5 bg-gray-200 dark:bg-gray-700" />
-                      <motion.img
-                        whileHover={{ y: -10 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                        src={image.src}
-                        alt={image.alt}
-                        width={970}
-                        height={700}
-                        className={`aspect-[970/700] w-full max-w-[200px] rounded-lg object-cover ring ring-gray-300/30 dark:ring-gray-800/50 shadow-xl hover:shadow-2xl transition-shadow duration-300 ${
-                          isClickable ? "cursor-pointer" : ""
-                        }`}
-                        onClick={() => handleImageClick(image, globalIndex)}
-                      />
-                    </div>
-                  );
-                })}
-              </motion.div>
-            ))}
-          </div>
+                return (
+                  <motion.img
+                    key={`img-${imgIdx}`}
+                    whileHover={{ y: -6 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    src={image.src}
+                    loading="lazy"
+                    alt={image.alt}
+                    width={970}
+                    height={700}
+                    className={`aspect-[970/700] w-full rounded-lg object-cover
+                      ring-1 ring-white/10 shadow-lg
+                      transition-shadow duration-300
+                      ${isClickable ? "cursor-pointer" : ""}`}
+                    onClick={() => handleImageClick(image, globalIndex)}
+                  />
+                );
+              })}
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
