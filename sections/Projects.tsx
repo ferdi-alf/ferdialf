@@ -6,16 +6,29 @@ import {
   ThreeDMarquee,
   MarqueeImage,
 } from "@/components/lightswind/3d-marquee";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerDescription,
-} from "@/components/ui/drawer";
+import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
 import { ShineButton } from "@/components/lightswind/shine-button";
 import ShinyText from "@/components/ui/ShinyText";
 import { BorderBeam } from "@/components/lightswind/border-beam";
+import ProjectsDrawerContent from "@/components/ProjectsDrawerContent";
+
+const VisuallyHidden = ({ children }: { children: React.ReactNode }) => (
+  <span
+    style={{
+      border: 0,
+      clip: "rect(0 0 0 0)",
+      height: "1px",
+      margin: "-1px",
+      overflow: "hidden",
+      padding: 0,
+      position: "absolute",
+      width: "1px",
+      whiteSpace: "nowrap",
+    }}
+  >
+    {children}
+  </span>
+);
 
 const images: MarqueeImage[] = [
   { src: "/images/projects/1.png", alt: "Project One" },
@@ -114,7 +127,6 @@ export default function ProjectsSection() {
             glowIntensity={0.8}
           />
 
-          {/* Gradient border rim */}
           <div
             style={{
               borderRadius: 20,
@@ -123,7 +135,6 @@ export default function ProjectsSection() {
                 "linear-gradient(145deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.04) 40%, rgba(0,0,0,0.6) 100%)",
             }}
           >
-            {/* Inner glass body — dark, no white */}
             <div
               className="backdrop-blur-md overflow-hidden"
               style={{
@@ -139,13 +150,11 @@ export default function ProjectsSection() {
               }}
             >
               <div className="p-2.5">
-                {/* Content card */}
                 <div
                   className="relative w-full md:h-90 h-60 overflow-hidden"
                   style={{ borderRadius: 14 }}
                 >
-                  {/* 3D Marquee — dark bg forced via className */}
-                  <div className="w-full h-full [&_section]:bg-transparent [&_section]:dark:bg-transparent">
+                  <div className="w-full h-full [&_section]:bg-transparent [&_section]:7dark:bg-transparent">
                     <ThreeDMarquee images={images} />
                   </div>
 
@@ -153,19 +162,14 @@ export default function ProjectsSection() {
                     className="absolute inset-0 pointer-events-none"
                     style={{
                       background: [
-                        /* bottom — strong fade for CTA legibility */
                         "linear-gradient(to top,    rgba(8,8,14,0.97) 0%, rgba(8,8,14,0.7) 35%, transparent 60%)",
-                        /* top — subtle fade */
                         "linear-gradient(to bottom, rgba(8,8,14,0.85) 0%, rgba(8,8,14,0.4) 18%, transparent 40%)",
-                        /* left edge */
                         "linear-gradient(to right,  rgba(8,8,14,0.7) 0%, rgba(8,8,14,0.2) 15%, transparent 35%)",
-                        /* right edge */
                         "linear-gradient(to left,   rgba(8,8,14,0.7) 0%, rgba(8,8,14,0.2) 15%, transparent 35%)",
                       ].join(", "),
                     }}
                   />
 
-                  {/* Bottom CTA */}
                   <div className="absolute bottom-0 left-0 right-0 z-10 flex flex-col items-center gap-2.5 pb-5 px-6">
                     <p className="text-[10px] text-white/25 tracking-[0.2em] uppercase font-mono">
                       Preview all works
@@ -186,14 +190,11 @@ export default function ProjectsSection() {
 
       {/* ── DRAWER (bottom) ── */}
       <Drawer open={isOpen} onOpenChange={setIsOpen} direction="bottom">
-        <DrawerContent className="h-[80vh]">
-          <DrawerHeader>
-            <DrawerTitle>Projects</DrawerTitle>
-            <DrawerDescription>
-              Detailed view of selected works.
-            </DrawerDescription>
-          </DrawerHeader>
-          {/* Drawer content will be filled in later */}
+        <DrawerContent className="h-[80vh] flex justify-center items-center">
+          <VisuallyHidden>
+            <DrawerTitle>Project Details</DrawerTitle>{" "}
+          </VisuallyHidden>
+          <ProjectsDrawerContent isOpen={isOpen} />
         </DrawerContent>
       </Drawer>
     </section>

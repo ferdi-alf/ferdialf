@@ -206,6 +206,8 @@ export default function Home() {
               glowRadius={30}
               showFade
               fadeIntensity={1}
+              idleSpeed={0.05}
+              idleRandomCount={2}
               className="bg-zinc-950!"
             >
               <div className="min-h-screen w-full flex justify-center items-start pt-20 pb-20">
