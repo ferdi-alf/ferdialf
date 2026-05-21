@@ -10,7 +10,7 @@ const projectsData: Project[] = [
       "Headless table component for deeply nested data with on-demand fetching, smart caching, server-side pagination, and collapsible row groups.",
     image: "/images/projects/1.png",
     techStack: ["NextJS", "TypeScript", "Tailwind", "TanStack Query"],
-    isOpenSource: false,
+    isOpenSource: true,
   },
   {
     id: "2",
@@ -19,7 +19,7 @@ const projectsData: Project[] = [
       "Geolocation-powered MSME discovery platform with AI-assisted search and an interactive map for real-time local business exploration.",
     image: "/images/projects/2.png",
     techStack: ["React", "Laravel", "Tailwind", "Leaflet"],
-    isOpenSource: false,
+    isOpenSource: true,
   },
   {
     id: "3",
@@ -28,7 +28,7 @@ const projectsData: Project[] = [
       "1st-place competition entry for VALTER 2025 at Politeknik Negeri Sriwijaya — a polished, performance-focused web design showcase.",
     image: "/images/projects/3.png",
     techStack: ["NextJS", "TypeScript", "Tailwind"],
-    isOpenSource: false,
+    isOpenSource: true,
   },
   {
     id: "4",
@@ -37,7 +37,7 @@ const projectsData: Project[] = [
       "Full-featured LMS covering class management, user roles, exams with cheat detection, badge assignments, and granular score analytics.",
     image: "/images/projects/4.png",
     techStack: ["Laravel", "Alpine.js", "Tailwind"],
-    isOpenSource: false,
+    isOpenSource: true,
   },
   {
     id: "5",
@@ -46,7 +46,7 @@ const projectsData: Project[] = [
       "Location-aware intern attendance system with geofenced check-ins and an interactive city map pinpointing each internship site.",
     image: "/images/projects/5.png",
     techStack: ["React", "TypeScript", "Laravel", "MUI", "Tailwind"],
-    isOpenSource: false,
+    isOpenSource: true,
   },
   {
     id: "6",
@@ -55,7 +55,7 @@ const projectsData: Project[] = [
       "Employee evaluation platform implementing AHP-TOPSIS multi-criteria analysis, integrated with a workshop registration module.",
     image: "/images/projects/6.png",
     techStack: ["React", "Laravel", "MUI"],
-    isOpenSource: false,
+    isOpenSource: true,
   },
   {
     id: "7",
@@ -64,7 +64,7 @@ const projectsData: Project[] = [
       "End-to-end event management system with attendee registration, post-event ratings, and a comment system for continuous feedback.",
     image: "/images/projects/7.png",
     techStack: ["Laravel", "Alpine.js", "Tailwind"],
-    isOpenSource: false,
+    isOpenSource: true,
   },
   {
     id: "8",
@@ -73,7 +73,7 @@ const projectsData: Project[] = [
       "A personalized digital anniversary experience featuring themed menus, animated transitions, and an embedded puzzle mini-game.",
     image: "/images/projects/8.png",
     techStack: ["NextJS", "TypeScript", "Tailwind"],
-    isOpenSource: false,
+    isOpenSource: true,
   },
   {
     id: "9",
@@ -82,7 +82,7 @@ const projectsData: Project[] = [
       "High-performance examination platform with real-time academic integrity detection and a Go-powered backend for sub-millisecond response.",
     image: "/images/projects/9.png",
     techStack: ["NextJS", "TypeScript", "Go", "PostgreSQL", "MUI"],
-    isOpenSource: false,
+    isOpenSource: true,
   },
   {
     id: "10",
@@ -91,7 +91,7 @@ const projectsData: Project[] = [
       "Streamlined POS application with Midtrans payment gateway integration, built for fast and reliable cashier transactions.",
     image: "/images/projects/10.png",
     techStack: ["NextJS", "TypeScript", "Tailwind"],
-    isOpenSource: false,
+    isOpenSource: true,
   },
   {
     id: "11",
@@ -100,7 +100,7 @@ const projectsData: Project[] = [
       "Competition landing page for Dyson vacuum products — crafted in pure HTML/CSS/JS to highlight product design and visual storytelling.",
     image: "/images/projects/11.png",
     techStack: ["HTML", "CSS", "JavaScript"],
-    isOpenSource: false,
+    isOpenSource: true,
   },
   {
     id: "12",
@@ -109,7 +109,7 @@ const projectsData: Project[] = [
       "Dedicated class portal for the RPL department at SMKN 4 Palembang, centralizing schedules, activities, and academic resources.",
     image: "/images/projects/12.png",
     techStack: ["React", "Laravel", "MUI"],
-    isOpenSource: false,
+    isOpenSource: true,
   },
   {
     id: "13",
@@ -118,7 +118,7 @@ const projectsData: Project[] = [
       "City-scoped MSME discovery platform for Palembang, enabling residents to find nearby local businesses via real-time geolocation.",
     image: "/images/projects/13.png",
     techStack: ["React", "Laravel", "Tailwind", "MUI"],
-    isOpenSource: false,
+    isOpenSource: true,
   },
 ];
 

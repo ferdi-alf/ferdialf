@@ -712,7 +712,7 @@ export function TechStackConvergence({
   const leftBeamColors = [
     { start: "#fff085", stop: "oklch(85.2% 0.199 91.936)" },
     { start: "oklch(91.7% 0.08 205.041)", stop: "oklch(78.9% 0.154 211.53)" },
-    { start: "oklch(45.7% 0.24 277.023)", stop: "oklch(35.9% 0.144 278.697)" },
+    { start: "oklch(67.3% 0.182 276.935)", stop: "oklch(58.5% 0.233 277.117)" },
     { start: "#f05033", stop: "#cc2900" },
     { start: "#ff6b6b", stop: "#cc0000" },
     { start: "#38bdf8", stop: "#0ea5e9" },
@@ -735,7 +735,7 @@ export function TechStackConvergence({
 
   return (
     <div
-      className={`relative flex flex-col items-center justify-center w-full overflow-hidden ${className}`}
+      className={`relative  flex flex-col items-center justify-center w-full overflow-hidden ${className}`}
       style={{
         height: 600,
         background: "transparent",

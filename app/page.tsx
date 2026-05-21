@@ -9,9 +9,11 @@ import Journey from "@/sections/Journey";
 import TechStackConvergence from "@/sections/TechStack";
 import ProjectsSection from "@/sections/Projects";
 import InteractiveGridBackground from "@/components/lightswind/interactive-grid-background";
+import StripesBackground from "@/components/lightswind/stripes-background";
+import CertificationsSection from "@/sections/Certifications";
 
 const TOTAL = 7;
-const COOLDOWN_MS = 600; // jeda setelah animasi selesai sebelum bisa navigate lagi
+const COOLDOWN_MS = 600;
 
 const variants = {
   enter: (dir: number) => ({
@@ -55,7 +57,7 @@ export default function Home() {
 
   const handleAnimationComplete = useCallback(() => {
     animating.current = false;
-    cooldownUntil.current = Date.now() + COOLDOWN_MS; // mulai cooldown
+    cooldownUntil.current = Date.now() + COOLDOWN_MS;
   }, []);
 
   useEffect(() => {
@@ -133,7 +135,7 @@ export default function Home() {
           animate="center"
           exit="exit"
           transition={transition}
-          onAnimationComplete={handleAnimationComplete} // ← pakai handler baru
+          onAnimationComplete={handleAnimationComplete}
           className="absolute inset-0 overflow-y-auto overflow-x-hidden"
         >
           {page === 0 && (
@@ -214,6 +216,32 @@ export default function Home() {
                 <ProjectsSection />
               </div>
             </InteractiveGridBackground>
+          )}
+
+          {page === 5 && (
+            <div className="relative min-h-screen bg-zinc-950 overflow-hidden">
+              <div className="absolute inset-0 z-0">
+                <StripesBackground
+                  position="right"
+                  width="w-full lg:w-1/2"
+                  height="h-full"
+                  opacity="opacity-30 lg:opacity-50"
+                />
+              </div>
+              <div
+                className="absolute inset-0 z-1 pointer-events-none"
+                style={{
+                  background: `
+                      radial-gradient(ellipse at 50% 40%, transparent 15%, rgba(9,9,11,0.72) 55%, rgba(9,9,11,0.97) 100%),
+                      linear-gradient(to bottom, rgba(9,9,11,0.6) 0%, transparent 15%, transparent 85%, rgba(9,9,11,0.85) 100%),
+                      linear-gradient(to left, transparent 50%, rgba(9,9,11,0.5) 100%)
+                    `,
+                }}
+              />
+              <div className="relative z-10">
+                <CertificationsSection />
+              </div>
+            </div>
           )}
         </motion.div>
       </AnimatePresence>

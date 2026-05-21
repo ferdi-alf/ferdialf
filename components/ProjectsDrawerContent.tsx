@@ -10,10 +10,6 @@ import LineWaves from "./LineWaves";
 import {
   _React,
   Laravel,
-  Nextjs,
-  Typescript,
-  Tailwind,
-  Alpinejs,
   MaterialUi,
   Go,
   Postgresql,
@@ -21,19 +17,25 @@ import {
   Css3,
   Javascript,
   Leaflet,
-  ReactQuery,
+  NextjsIcon,
+  TailwindIcon,
+  TypescriptIcon,
+  AlpinejsIcon,
+  ReactQueryIcon,
 } from "@dev.icons/react";
+import ShinyText from "./ui/ShinyText";
+import Image from "next/image";
 
 const TECH_ICON_MAP: Record<
   string,
   React.ComponentType<{ className?: string }>
 > = {
-  NextJS: Nextjs,
+  NextJS: NextjsIcon,
   React: _React,
-  TypeScript: Typescript,
-  Tailwind: Tailwind,
+  TypeScript: TypescriptIcon,
+  Tailwind: TailwindIcon,
   Laravel: Laravel,
-  "Alpine.js": Alpinejs,
+  "Alpine.js": AlpinejsIcon,
   MUI: MaterialUi,
   Go: Go,
   PostgreSQL: Postgresql,
@@ -41,7 +43,7 @@ const TECH_ICON_MAP: Record<
   CSS: Css3,
   JavaScript: Javascript,
   Leaflet: Leaflet,
-  tanstackQuery: ReactQuery,
+  "TanStack Query": ReactQueryIcon,
 };
 
 function TechIcon({ tech }: { tech: string }) {
@@ -58,7 +60,6 @@ function TechIcon({ tech }: { tech: string }) {
   return <Icon className="w-6 h-6 opacity-75" />;
 }
 
-// ─── SkeletonCard ─────────────────────────────────────────────────────────────
 function SkeletonCard() {
   return (
     <div
@@ -86,7 +87,6 @@ function SkeletonCard() {
   );
 }
 
-// ─── ProjectCard ─────────────────────────────────────────────────────────────
 interface ProjectCardProps {
   project: Project;
   index: number;
@@ -160,9 +160,7 @@ function ProjectCard({
             "transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease",
         }}
       >
-        {/* Image area */}
         <div className="relative w-full aspect-video overflow-hidden bg-zinc-900">
-          {/* Skeleton pulse */}
           <div
             className="absolute inset-0 bg-zinc-700/35 animate-pulse"
             style={{
@@ -193,15 +191,51 @@ function ProjectCard({
             }}
           />
 
-          {/* Private badge */}
-          {!project.isOpenSource && (
-            <span className="absolute top-2.5 right-2.5 text-[9px] font-mono tracking-[0.15em] text-white/25 bg-black/50 backdrop-blur-sm px-2 py-0.5 rounded-full border border-white/[0.07] uppercase">
-              Private
-            </span>
-          )}
+          <span className="absolute top-2.5 right-2.5 text-[9px] font-mono tracking-[0.15em] text-white/25 bg-black/50 backdrop-blur-sm px-2 py-0.5 rounded-full border border-white/[0.07] uppercase">
+            <div
+              className="flex items-center gap-1.5"
+              style={{
+                position: "relative",
+                filter:
+                  "drop-shadow(0 4px 12px rgba(0,0,0,0.7)) drop-shadow(0 1px 3px rgba(0,0,0,0.9))",
+              }}
+            >
+              <div
+                style={{
+                  padding: "1.5px",
+                  borderRadius: 10,
+                  background:
+                    "linear-gradient(145deg, rgba(255,255,255,0.35) 0%, rgba(180,180,180,0.1) 50%, rgba(0,0,0,0.5) 100%)",
+                  boxShadow:
+                    "0 2px 8px rgba(0,0,0,0.6), 0 1px 2px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1)",
+                }}
+              >
+                <div
+                  style={{
+                    borderRadius: 8.5,
+                    overflow: "hidden",
+                    background: "#0a0a0a",
+                    boxShadow: "inset 0 1px 3px rgba(0,0,0,0.8)",
+                  }}
+                >
+                  <Image
+                    width={200}
+                    height={200}
+                    loading="eager"
+                    alt="Muhammad Ferdi Alfian - Logo"
+                    src="/images/icon.PNG"
+                    className="w-4 h-4 block"
+                    style={{ display: "block" }}
+                  />
+                </div>
+              </div>
+              <span className="text-[9px] font-mono tracking-[0.15em] text-white/55">
+                MFA
+              </span>
+            </div>
+          </span>
         </div>
 
-        {/* Content */}
         <div className="p-4">
           <h3 className="text-[13px] font-semibold text-white/85 leading-snug mb-1.5 tracking-tight">
             {project.title}
@@ -210,14 +244,12 @@ function ProjectCard({
             {project.description}
           </p>
 
-          {/* Tech icons */}
           <div className="flex flex-wrap items-center gap-1.5">
             {project.techStack.map((tech) => (
               <TechIcon key={tech} tech={tech} />
             ))}
           </div>
 
-          {/* Link row */}
           {(project.liveUrl || project.githubUrl) && (
             <div className="flex items-center gap-3 mt-3 pt-3 border-t border-white/5">
               {project.liveUrl && (
@@ -240,7 +272,6 @@ function ProjectCard({
   );
 }
 
-// ─── Main ─────────────────────────────────────────────────────────────────────
 export default function ProjectsDrawerContent({ isOpen }: { isOpen: boolean }) {
   const [lineWavesReady, setLineWavesReady] = useState(false);
   const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
@@ -302,12 +333,11 @@ export default function ProjectsDrawerContent({ isOpen }: { isOpen: boolean }) {
 
       <motion.div
         className="w-full h-full overflow-auto"
+        onWheel={(e) => e.stopPropagation()}
         animate={{ opacity: isReady ? 1 : 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
-        {/* ══ HERO SECTION ══ */}
         <div className="relative min-h-[75vh] flex flex-col overflow-hidden">
-          {/* Layer 1 — LineWaves background */}
           <div className="absolute inset-0 z-0">
             <LineWaves
               speed={0.5}
@@ -326,47 +356,50 @@ export default function ProjectsDrawerContent({ isOpen }: { isOpen: boolean }) {
             />
           </div>
 
-          {/* Layer 2 — Transparent gradient mask: 80% tembus, fade ke zinc-900 di bawah */}
           <div
             className="absolute inset-0 z-10 pointer-events-none"
             style={{
               background: `linear-gradient(
                 to bottom,
-                rgba(9,9,11,0.05) 0%,
-                rgba(9,9,11,0.05) 72%,
-                rgba(9,9,11,0.55) 85%,
+                rgba(9,9,11,0.25) 0%,
+                rgba(9,9,11,0.50) 45%,
+                rgba(9,9,11,0.75) 75%,
                 rgb(24,24,27) 100%
               )`,
             }}
           />
 
-          {/* Layer 3 — Title content */}
-          <div className="relative z-20 flex flex-col items-center justify-center flex-1 text-center px-6 py-20">
+          <div
+            className="relative z-20 flex flex-col items-center justify-center flex-1 text-center px-6 py-20"
+            style={{
+              textShadow:
+                "0 2px 24px rgba(0,0,0,0.95), 0 0 60px rgba(0,0,0,0.8)",
+            }}
+          >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: isReady ? 1 : 0, y: isReady ? 0 : 20 }}
               transition={{ duration: 0.7, delay: 0.1 }}
               className="flex flex-col items-center gap-4"
             >
-              <span className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] text-white/25 uppercase font-mono">
-                <span className="w-5 h-px bg-white/15" />
-                Portfolio
-                <span className="w-5 h-px bg-white/15" />
+              <span className="inline-flex items-center gap-2 text-[10px] tracking-[0.2em] text-white/55 uppercase font-mono">
+                <span className="w-5 h-px bg-white/25" />
+                Portofolio
+                <span className="w-5 h-px bg-white/25" />
               </span>
 
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1]">
+              <h2 className="text-3xl md:text-5xl  font-bold tracking-tight leading-[1.1]">
                 <span className="text-white/88">Crafted with</span>{" "}
-                <span className="text-white/40">Precision.</span>
+                <ShinyText text="Precision." />
               </h2>
 
-              <p className="text-sm text-white/30 max-w-md leading-relaxed">
+              <p className="text-sm text-white/65 max-w-md leading-relaxed">
                 A curated selection of real-world projects — each built,
                 shipped, and refined for production. Not all works are publicly
                 listed or open source; some remain private by client agreement.
               </p>
 
-              {/* Scroll hint */}
-              <div className="mt-8 flex flex-col items-center gap-1.5 text-white/15">
+              <div className="mt-8 flex flex-col items-center gap-1.5 text-white/45">
                 <p className="text-[9px] font-mono tracking-[0.25em] uppercase">
                   Scroll to explore
                 </p>
@@ -399,7 +432,6 @@ export default function ProjectsDrawerContent({ isOpen }: { isOpen: boolean }) {
           </div>
         </div>
 
-        {/* ══ PROJECTS GRID ══ */}
         <div className="bg-zinc-900 px-4 md:px-8 pb-20 pt-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 max-w-7xl mx-auto">
             {projects.map((project, i) => (
@@ -412,17 +444,14 @@ export default function ProjectsDrawerContent({ isOpen }: { isOpen: boolean }) {
               />
             ))}
 
-            {/* Skeleton saat fetch lagi */}
             {loading &&
               Array.from({ length: 3 }).map((_, i) => (
                 <SkeletonCard key={`sk-${i}`} />
               ))}
           </div>
 
-          {/* Intersection sentinel */}
           <div ref={sentinelRef} className="h-2 mt-6" />
 
-          {/* End of list */}
           {!hasMore && projects.length > 0 && (
             <p className="text-center text-white/15 text-[10px] font-mono tracking-[0.2em] uppercase mt-4">
               — End of works —
