@@ -4,66 +4,9 @@ import * as React from "react";
 import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
 import { ShineButton } from "@/components/lightswind/shine-button";
 import ShinyText from "@/components/ui/ShinyText";
-import CertificatesDrawerContent from "@/components/CertificatesDrawerContent";
-
-const VisuallyHidden = ({ children }: { children: React.ReactNode }) => (
-  <span
-    style={{
-      border: 0,
-      clip: "rect(0 0 0 0)",
-      height: "1px",
-      margin: "-1px",
-      overflow: "hidden",
-      padding: 0,
-      position: "absolute",
-      width: "1px",
-      whiteSpace: "nowrap",
-    }}
-  >
-    {children}
-  </span>
-);
-
-function PreviewStack({ srcs }: { srcs: string[] }) {
-  const rotations = [-6, 1, 7];
-  const offsets = [
-    "-translate-y-3 -translate-x-2",
-    "translate-y-0",
-    "translate-y-2 translate-x-2",
-  ];
-
-  return (
-    <div className="relative w-60  h-44 md:w-92 md:h-72 mx-auto pr-8 sm:pr-0">
-      {srcs.slice(0, 3).map((src, i) => (
-        <div
-          key={i}
-          className={`absolute inset-0 rounded-xl overflow-hidden border border-white/[0.07] shadow-2xl ${offsets[i]}`}
-          style={{
-            transform: `rotate(${rotations[i]}deg)`,
-            zIndex: i,
-            background:
-              "linear-gradient(160deg, rgba(39,39,42,0.9) 0%, rgba(18,18,22,0.98) 100%)",
-            boxShadow: "0 12px 40px rgba(0,0,0,0.6)",
-          }}
-        >
-          <img
-            src={src}
-            alt=""
-            className="w-full h-full object-cover opacity-70"
-            draggable={false}
-          />
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 60%)",
-            }}
-          />
-        </div>
-      ))}
-    </div>
-  );
-}
+import CertificatesDrawerContent from "@/components/Certifications/CertificatesDrawerContent";
+import PreviewStack from "@/components/Certifications/PriviewStack";
+import VisuallyHidden from "@/components/ui/VisuallyHidden";
 
 export default function CertificationsSection() {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -89,9 +32,9 @@ export default function CertificationsSection() {
           </h2>
 
           <p className="text-sm md:text-base text-white/35 leading-relaxed max-w-sm">
-            A collection of verified credentials, competition awards, and
-            professional certifications earned across software engineering,
-            cloud, and web development.
+            A collection of certifications, awards, and milestones that
+            represent my growth in software engineering, web development, and
+            continuous technology learning.
           </p>
 
           <div className="flex gap-7 pt-1">

@@ -1,6 +1,5 @@
 "use client";
 
-import Bento from "@/components/Bento";
 import SectionLayout from "@/components/layouts/SectionLayout";
 import { ScrollTimeline } from "@/components/lightswind/scroll-timeline";
 import { useJourney } from "@/hooks/useJourney";

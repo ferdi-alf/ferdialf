@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import React, { useRef, useEffect, useState } from "react";
 import * as THREE from "three";
 // import './LightPillar.css';
-import "../app/globals.css";
+import "../../app/globals.css";
 
 interface LightPillarProps {
   topColor?: string;

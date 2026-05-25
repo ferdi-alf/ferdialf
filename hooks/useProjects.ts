@@ -65,7 +65,6 @@ export const useProjects = (enabled: boolean) => {
     }
   }, []);
 
-  // Fetch once on first enable
   useEffect(() => {
     if (!enabled || hasInitializedRef.current) return;
     hasInitializedRef.current = true;

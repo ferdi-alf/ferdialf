@@ -10,7 +10,7 @@ import { Drawer, DrawerContent, DrawerTitle } from "@/components/ui/drawer";
 import { ShineButton } from "@/components/lightswind/shine-button";
 import ShinyText from "@/components/ui/ShinyText";
 import { BorderBeam } from "@/components/lightswind/border-beam";
-import ProjectsDrawerContent from "@/components/ProjectsDrawerContent";
+import ProjectsDrawerContent from "@/components/Projects/ProjectsDrawerContent";
 
 const VisuallyHidden = ({ children }: { children: React.ReactNode }) => (
   <span
@@ -59,14 +59,12 @@ export default function ProjectsSection() {
             <ShinyText text="With Purpose." className="text-white/55 " />
           </h2>
 
-          {/* Subtitle */}
           <p className="text-sm md:text-base text-white/35 leading-relaxed max-w-sm">
             A curated collection of fullstack applications — from production
             systems to experimental builds. Each one shipped, refined, and
             battle-tested with real clients.
           </p>
 
-          {/* Stats row */}
           <div className="flex gap-7 pt-1">
             <div>
               <div className="text-xl font-semibold text-white/80">28+</div>
@@ -90,7 +88,6 @@ export default function ProjectsSection() {
             </div>
           </div>
 
-          {/* CTA Button */}
           <div className="pt-1 md:block hidden">
             <ShineButton
               label="Explore Projects"

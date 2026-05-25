@@ -11,6 +11,8 @@ import ProjectsSection from "@/sections/Projects";
 import InteractiveGridBackground from "@/components/lightswind/interactive-grid-background";
 import StripesBackground from "@/components/lightswind/stripes-background";
 import CertificationsSection from "@/sections/Certifications";
+import ContactSection from "@/sections/Contact";
+import ContactFooter from "@/sections/Contact";
 
 const TOTAL = 7;
 const COOLDOWN_MS = 600;
@@ -241,6 +243,11 @@ export default function Home() {
               <div className="relative z-10">
                 <CertificationsSection />
               </div>
+            </div>
+          )}
+          {page === 6 && (
+            <div className="min-h-screen bg-zinc-950 w-full flex justify-center items-start pt-20 pb-20">
+              <ContactFooter />
             </div>
           )}
         </motion.div>

@@ -19,11 +19,11 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL("https://ferdialf.vercel.app"),
   title: {
-    default: "Muhammad Ferdi Alfian | Fullstack Developer",
+    default: "Muhammad Ferdi Alfian | Software Engineer",
     template: "%s | Muhammad Ferdi Alfian",
   },
   description:
-    "Fullstack web developer from Indonesia. Specialized in Next.js, Golang, and scalable web systems.",
+    "Software Engineer from Indonesia. Specialized in Next.js, Golang, and scalable web systems.",
   keywords: [
     "Muhammad Ferdi Alfian",
     "Freelance Developer",
@@ -46,9 +46,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Muhammad Ferdi Alfian" }],
   openGraph: {
-    title: "Muhammad Ferdi Alfian | Fullstack Developer",
+    title: "Muhammad Ferdi Alfian | Software Engineer",
     description:
-      "Fullstack developer building scalable web applications with Next.js and Golang.",
+      "Software Engineer building scalable web applications with Next.js and Golang.",
     url: "https://ferdialf.vercel.app",
     siteName: "Muhammad Ferdi Alfian",
     images: [
@@ -64,8 +64,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Muhammad Ferdi Alfian | Fullstack Developer",
-    description: "Fullstack developer specializing in modern web architecture.",
+    title: "Muhammad Ferdi Alfian | Software Engineer",
+    description: "Software Engineer specializing in modern web architecture.",
     images: ["/og-image.png"],
   },
   robots: {

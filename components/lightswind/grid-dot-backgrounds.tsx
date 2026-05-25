@@ -1,4 +1,4 @@
-// @ts-nocheck
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -56,7 +56,7 @@ export const GridBackground = ({
   return (
     <div
       className={cn(
-        "relative flex h-[50rem] w-full items-center justify-center bg-transparent",
+        "relative flex h-200 w-full items-center justify-center bg-transparent",
         className,
       )}
       {...props}
