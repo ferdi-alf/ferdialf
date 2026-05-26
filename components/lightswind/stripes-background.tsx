@@ -1,4 +1,3 @@
-// @ts-nocheck
 // components/ui/StripesBackground.tsx
 import React from "react";
 import clsx from "clsx";
@@ -36,7 +35,7 @@ export const StripesBackground: React.FC<StripesBackgroundProps> = ({
         width,
         height,
         opacity,
-        className
+        className,
       )}
     />
   );

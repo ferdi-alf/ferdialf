@@ -8,6 +8,7 @@ import { darkSurface, rimBorder } from "@/styles/surfaces";
 import Lanyard from "@/components/Lanyard";
 import FormContact from "@/components/Contact/FormContact";
 import Footer from "@/components/Footer";
+import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 export default function ContactFooter() {
   const infoItems = [
@@ -28,6 +29,24 @@ export default function ContactFooter() {
     },
   ];
 
+  const socialLinks = [
+    {
+      icon: <FaGithub size={18} />,
+      href: "https://github.com/ferdi-alf",
+      label: "GitHub",
+    },
+    {
+      icon: <FaInstagram size={18} />,
+      href: "https://www.instagram.com/eternalferr_",
+      label: "Instagram",
+    },
+    {
+      icon: <FaLinkedinIn size={18} />,
+      href: "https://www.linkedin.com/in/muhammad-ferdi-alfian-979273396?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
+      label: "LinkedIn",
+    },
+  ];
+
   return (
     <div className="w-full ">
       <section className="min-h-screen grid grid-cols-1 lg:grid-cols-2 max-w-7xl mx-auto gap-4 p-3 items-center">
@@ -39,7 +58,7 @@ export default function ContactFooter() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="h-full flex flex-col justify-center py-2 px-2 lg:px-4"
           >
-            <div className="mb-5">
+            <div className="mb-2.5">
               <p className="text-xs tracking-[0.3em] text-white/40 uppercase mb-3 font-light">
                 Get In Touch
               </p>
@@ -60,6 +79,26 @@ export default function ContactFooter() {
                 I&apos;m always open to interesting projects, collaborations, or
                 just a friendly chat about tech and design.
               </p>
+            </div>
+            <div className="flex gap-3 my-1.5">
+              {socialLinks.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                >
+                  <motion.div whileHover={{ y: -2 }} style={rimBorder}>
+                    <div
+                      style={{ ...darkSurface, borderRadius: 10 }}
+                      className="w-9 h-9 flex items-center p-2! justify-center text-white/35 hover:text-white/70 transition-colors"
+                    >
+                      {s.icon}
+                    </div>
+                  </motion.div>
+                </a>
+              ))}
             </div>
 
             <div className="md:gap-2.5 gap-2  flex justify-center items-center ">
@@ -87,7 +126,7 @@ export default function ContactFooter() {
           <FormContact />
         </div>
         <div className="lg:block hidden h-full w-full">
-          <Lanyard position={[0, 0, 10]} gravity={[0, -40, 0]} />
+          <Lanyard position={[0, 0, 15]} gravity={[0, -40, 0]} />
         </div>
       </section>
 

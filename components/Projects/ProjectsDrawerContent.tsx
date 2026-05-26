@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useProjects } from "@/hooks/useProjects";
-import LineWaves from "@/components/LineWaves";
+import LineWaves from "@/components/Reactbits/LineWaves";
 import DrawerShell from "@/components/drawer/DrawerShell";
 import DrawerHero from "@/components/drawer/DrawerHero";
 import DrawerCardGrid from "@/components/drawer/DrawerCardGrid";

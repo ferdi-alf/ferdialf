@@ -114,15 +114,6 @@ export default function ProjectsSection() {
             borderThickness={2}
             glowIntensity={0.8}
           />
-          <BorderBeam
-            colorFrom="#7400ff"
-            colorTo="#9b41ff"
-            size={100}
-            delay={1}
-            duration={6}
-            borderThickness={2}
-            glowIntensity={0.8}
-          />
 
           <div
             style={{

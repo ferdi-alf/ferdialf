@@ -1,380 +1,22 @@
-/* eslint-disable react-hooks/refs */
 "use client";
 
-import React, {
-  forwardRef,
-  useRef,
-  useEffect,
-  useState,
-  useId,
-  ReactNode,
-  RefObject,
-} from "react";
+import { useRef } from "react";
 import { motion } from "motion/react";
+import { RefObject } from "react";
 import ShinyText from "@/components/ui/ShinyText";
-import Image from "next/image";
+import { AnimatedBeam } from "@/components/TechStack/AnimatedBeam";
+import { OrbitRing } from "@/components/TechStack/Orbiting";
+import { IconCircle } from "@/components/TechStack/IconCircle";
+import { CenterLogo } from "@/components/TechStack/CenterLogo";
+import {
+  LEFT_BEAM_COLORS,
+  RIGHT_BEAM_COLORS,
+  LEFT_CURVATURES,
+  RIGHT_CURVATURES,
+  PATH_COLOR,
+} from "@/config/tech-stack-config";
 
-interface AnimatedBeamProps {
-  containerRef: RefObject<HTMLDivElement | null>;
-  fromRef: RefObject<HTMLElement | null>;
-  toRef: RefObject<HTMLElement | null>;
-  curvature?: number;
-  reverse?: boolean;
-  duration?: number;
-  delay?: number;
-  pathColor?: string;
-  pathWidth?: number;
-  gradientStartColor?: string;
-  gradientStopColor?: string;
-  startXOffset?: number;
-  startYOffset?: number;
-  endXOffset?: number;
-  endYOffset?: number;
-}
-
-interface OrbitRingProps {
-  radius: number;
-  duration: number;
-  reverse?: boolean;
-  color?: string;
-  opacity?: number;
-  dotSize?: number;
-  children?: ReactNode;
-}
-
-interface IconCircleProps {
-  icon: ReactNode;
-  label?: string;
-  size?: number;
-}
-
-interface TechItem {
-  ref: RefObject<HTMLDivElement | null>;
-  icon: ReactNode;
-  label: string;
-}
-
-const AnimatedBeam = ({
-  containerRef,
-  fromRef,
-  toRef,
-  curvature = 0,
-  reverse = false,
-  duration = 8,
-  delay = 0,
-  pathColor = "rgba(255,255,255,0.06)",
-  pathWidth = 1.5,
-  gradientStartColor = "#00f0ff",
-  gradientStopColor = "#0066ff",
-  startXOffset = 0,
-  startYOffset = 0,
-  endXOffset = 0,
-  endYOffset = 0,
-}: AnimatedBeamProps) => {
-  const id = useId();
-  const [pathD, setPathD] = useState("");
-  const [svgDimensions, setSvgDimensions] = useState({ width: 0, height: 0 });
-
-  const gradientCoordinates = reverse
-    ? {
-        x1: ["120%", "-20%"],
-        x2: ["100%", "0%"],
-        y1: ["0%", "0%"],
-        y2: ["0%", "0%"],
-      }
-    : {
-        x1: ["-20%", "120%"],
-        x2: ["0%", "100%"],
-        y1: ["0%", "0%"],
-        y2: ["0%", "0%"],
-      };
-
-  useEffect(() => {
-    const updatePath = () => {
-      if (containerRef.current && fromRef.current && toRef.current) {
-        const containerRect = containerRef.current.getBoundingClientRect();
-        const rectA = fromRef.current.getBoundingClientRect();
-        const rectB = toRef.current.getBoundingClientRect();
-        setSvgDimensions({
-          width: containerRect.width,
-          height: containerRect.height,
-        });
-        const startX =
-          rectA.left - containerRect.left + rectA.width / 2 + startXOffset;
-        const startY =
-          rectA.top - containerRect.top + rectA.height / 2 + startYOffset;
-        const endX =
-          rectB.left - containerRect.left + rectB.width / 2 + endXOffset;
-        const endY =
-          rectB.top - containerRect.top + rectB.height / 2 + endYOffset;
-        const controlY = startY - curvature;
-        setPathD(
-          `M ${startX},${startY} Q ${(startX + endX) / 2},${controlY} ${endX},${endY}`,
-        );
-      }
-    };
-    const ro = new ResizeObserver(updatePath);
-    if (containerRef.current) ro.observe(containerRef.current);
-    updatePath();
-    return () => ro.disconnect();
-  }, [
-    containerRef,
-    fromRef,
-    toRef,
-    curvature,
-    startXOffset,
-    startYOffset,
-    endXOffset,
-    endYOffset,
-  ]);
-
-  return (
-    <svg
-      fill="none"
-      width={svgDimensions.width}
-      height={svgDimensions.height}
-      className="pointer-events-none absolute top-0 left-0"
-      viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}
-    >
-      <path
-        d={pathD}
-        stroke={pathColor}
-        strokeWidth={pathWidth}
-        strokeOpacity={1}
-        strokeLinecap="round"
-      />
-      <path
-        d={pathD}
-        stroke={`url(#${id})`}
-        strokeWidth={pathWidth + 1.5}
-        strokeOpacity={1}
-        strokeLinecap="round"
-        filter={`url(#glow-${id})`}
-      />
-      <defs>
-        <filter id={`glow-${id}`} x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-        <motion.linearGradient
-          id={id}
-          gradientUnits="userSpaceOnUse"
-          initial={{ x1: "0%", x2: "0%", y1: "0%", y2: "0%" }}
-          animate={{
-            x1: gradientCoordinates.x1,
-            x2: gradientCoordinates.x2,
-            y1: gradientCoordinates.y1,
-            y2: gradientCoordinates.y2,
-          }}
-          transition={{
-            delay,
-            duration,
-            ease: "linear",
-            repeat: Infinity,
-            repeatDelay: 1.2,
-          }}
-        >
-          <stop offset="0%" stopColor={gradientStartColor} stopOpacity="0" />
-          <stop offset="20%" stopColor={gradientStartColor} stopOpacity="0.8" />
-          <stop offset="50%" stopColor={gradientStopColor} stopOpacity="1" />
-          <stop offset="80%" stopColor={gradientStopColor} stopOpacity="0.8" />
-          <stop offset="100%" stopColor={gradientStopColor} stopOpacity="0" />
-        </motion.linearGradient>
-      </defs>
-    </svg>
-  );
-};
-
-const OrbitRing = ({
-  radius,
-  duration,
-  reverse = false,
-  color = "#00d4ff",
-  opacity = 0.4,
-  dotSize = 3,
-  children,
-}: OrbitRingProps) => (
-  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-    <div
-      style={{
-        width: radius * 2,
-        height: radius * 2,
-        borderRadius: "50%",
-        border: `1px solid ${color}`,
-        opacity: opacity * 0.4,
-        position: "absolute",
-      }}
-    />
-    <motion.div
-      style={{ width: radius * 2, height: radius * 2, position: "absolute" }}
-      animate={{ rotate: reverse ? -360 : 360 }}
-      transition={{ duration, repeat: Infinity, ease: "linear" }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: dotSize,
-          height: dotSize,
-          borderRadius: "50%",
-          background: color,
-          boxShadow: `0 0 6px 2px ${color}`,
-        }}
-      />
-      {children}
-    </motion.div>
-  </div>
-);
-
-const IconCircle = forwardRef<HTMLDivElement, IconCircleProps>(
-  ({ icon, label, size = 48 }, ref) => (
-    <div ref={ref} className="relative z-10 flex flex-col items-center gap-1.5">
-      <div
-        style={{
-          width: size,
-          height: size,
-          borderRadius: "50%",
-          background: "rgba(255,255,255,0.05)",
-          border: "1px solid rgba(255,255,255,0.15)",
-          backdropFilter: "blur(8px)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          boxShadow:
-            "0 0 12px rgba(0,200,255,0.1), inset 0 1px 0 rgba(255,255,255,0.1)",
-          overflow: "hidden",
-        }}
-      >
-        {typeof icon === "string" ? (
-          <span style={{ fontSize: size * 0.42, lineHeight: 1 }}>{icon}</span>
-        ) : (
-          <div
-            style={{
-              width: size * 0.55,
-              height: size * 0.55,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            {icon}
-          </div>
-        )}
-      </div>
-      {label && (
-        <span
-          style={{
-            fontSize: 10,
-            color: "rgba(255,255,255,0.4)",
-            letterSpacing: "0.05em",
-            fontFamily: "monospace",
-          }}
-        >
-          {label}
-        </span>
-      )}
-    </div>
-  ),
-);
-IconCircle.displayName = "IconCircle";
-
-const CenterLogo = forwardRef<HTMLDivElement>((_, ref) => (
-  <div
-    ref={ref}
-    className="relative flex items-center justify-center"
-    style={{ width: 80, height: 80 }}
-  >
-    <motion.div
-      style={{
-        position: "absolute",
-        inset: -24,
-        borderRadius: "50%",
-        background:
-          "radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 70%)",
-      }}
-      animate={{ opacity: [0.3, 0.8, 0.3], scale: [1, 1.08, 1] }}
-      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-    />
-
-    <motion.div
-      animate={{ opacity: [0.75, 1, 0.75] }}
-      transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-      style={{
-        width: 80,
-        height: 80,
-        borderRadius: "50%",
-        padding: "1.5px",
-        background:
-          "linear-gradient(145deg, rgba(255,255,255,0.30) 0%, rgba(180,180,180,0.08) 45%, rgba(0,0,0,0.65) 100%)",
-        boxShadow:
-          "0 8px 28px rgba(0,0,0,0.7), 0 2px 6px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.1)",
-        filter:
-          "drop-shadow(0 6px 18px rgba(0,0,0,0.65)) drop-shadow(0 1px 3px rgba(0,0,0,0.85))",
-        position: "relative",
-        zIndex: 10,
-      }}
-    >
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          borderRadius: "50%",
-          background:
-            "linear-gradient(160deg, rgba(50,50,52,0.95) 0%, rgba(15,15,16,0.98) 60%, rgba(8,8,9,1) 100%)",
-          boxShadow:
-            "inset 0 1px 0 rgba(255,255,255,0.13), inset 1px 0 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.55), inset -1px 0 0 rgba(0,0,0,0.4)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            filter:
-              "drop-shadow(0 3px 8px rgba(0,0,0,0.8)) drop-shadow(0 1px 2px rgba(0,0,0,1))",
-          }}
-        >
-          <div
-            style={{
-              padding: "1.5px",
-              borderRadius: 10,
-              background:
-                "linear-gradient(145deg, rgba(255,255,255,0.32) 0%, rgba(160,160,160,0.08) 50%, rgba(0,0,0,0.55) 100%)",
-              boxShadow:
-                "0 2px 8px rgba(0,0,0,0.7), 0 1px 2px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.1)",
-            }}
-          >
-            <div
-              style={{
-                borderRadius: 8.5,
-                overflow: "hidden",
-                background: "#0a0a0a",
-                boxShadow: "inset 0 1px 3px rgba(0,0,0,0.8)",
-              }}
-            >
-              <Image
-                alt="Muhammad Ferdi Alfian - Logo"
-                width={200}
-                height={200}
-                loading="eager"
-                className="w-11 h-11 block"
-                src="/images/icon.PNG"
-                style={{ display: "block" }}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  </div>
-));
-CenterLogo.displayName = "CenterLogo";
+import { TechItem } from "@/types/tect-stack";
 
 export function TechStackConvergence({
   className = "",
@@ -384,21 +26,24 @@ export function TechStackConvergence({
   const containerRef = useRef<HTMLDivElement>(null);
   const centerRef = useRef<HTMLDivElement>(null);
 
-  const refL1 = useRef<HTMLDivElement>(null);
-  const refL2 = useRef<HTMLDivElement>(null);
-  const refL3 = useRef<HTMLDivElement>(null);
-  const refL4 = useRef<HTMLDivElement>(null);
-  const refL5 = useRef<HTMLDivElement>(null);
+  const leftRefs: RefObject<HTMLDivElement | null>[] = [
+    useRef<HTMLDivElement>(null),
+    useRef<HTMLDivElement>(null),
+    useRef<HTMLDivElement>(null),
+    useRef<HTMLDivElement>(null),
+    useRef<HTMLDivElement>(null),
+  ];
 
-  const refR1 = useRef<HTMLDivElement>(null);
-  const refR2 = useRef<HTMLDivElement>(null);
-  const refR3 = useRef<HTMLDivElement>(null);
-  const refR4 = useRef<HTMLDivElement>(null);
-  const refR5 = useRef<HTMLDivElement>(null);
+  const rightRefs: RefObject<HTMLDivElement | null>[] = [
+    useRef<HTMLDivElement>(null),
+    useRef<HTMLDivElement>(null),
+    useRef<HTMLDivElement>(null),
+    useRef<HTMLDivElement>(null),
+    useRef<HTMLDivElement>(null),
+  ];
 
-  const leftTechs: TechItem[] = [
+  const leftIcons: TechItem[] = [
     {
-      ref: refL1,
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
           <path
@@ -411,7 +56,6 @@ export function TechStackConvergence({
       label: "JavaScript",
     },
     {
-      ref: refL2,
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -446,7 +90,6 @@ export function TechStackConvergence({
       label: "Golang",
     },
     {
-      ref: refL3,
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -472,7 +115,6 @@ export function TechStackConvergence({
       label: "PHP",
     },
     {
-      ref: refL4,
       icon: (
         <svg
           version="1.1"
@@ -526,7 +168,6 @@ export function TechStackConvergence({
       label: "Git",
     },
     {
-      ref: refL5,
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 218.587">
           <path
@@ -571,9 +212,8 @@ export function TechStackConvergence({
     },
   ];
 
-  const rightTechs: TechItem[] = [
+  const rightIcons: TechItem[] = [
     {
-      ref: refR1,
       icon: (
         <svg
           width="256px"
@@ -632,7 +272,6 @@ export function TechStackConvergence({
       label: "Next.JS",
     },
     {
-      ref: refR2,
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
           <path
@@ -644,7 +283,6 @@ export function TechStackConvergence({
       label: "Fiber",
     },
     {
-      ref: refR3,
       icon: (
         <svg
           width="256px"
@@ -666,7 +304,6 @@ export function TechStackConvergence({
       label: "Laravel",
     },
     {
-      ref: refR4,
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -682,7 +319,6 @@ export function TechStackConvergence({
       label: "GitHub",
     },
     {
-      ref: refR5,
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -709,38 +345,10 @@ export function TechStackConvergence({
     },
   ];
 
-  const leftBeamColors = [
-    { start: "#fff085", stop: "oklch(85.2% 0.199 91.936)" },
-    { start: "oklch(91.7% 0.08 205.041)", stop: "oklch(78.9% 0.154 211.53)" },
-    { start: "oklch(67.3% 0.182 276.935)", stop: "oklch(58.5% 0.233 277.117)" },
-    { start: "#f05033", stop: "#cc2900" },
-    { start: "#ff6b6b", stop: "#cc0000" },
-    { start: "#38bdf8", stop: "#0ea5e9" },
-  ];
-
-  const rightBeamColors = [
-    { start: "#e4e4e7", stop: "#9f9fa9" },
-    { start: "oklch(68.5% 0.169 237.323)", stop: "oklch(58.8% 0.158 241.966)" },
-    { start: "oklch(80.8% 0.114 19.571)", stop: "oklch(70.4% 0.191 22.216)" },
-    { start: "#d4d4d4", stop: "#a3a3a3" },
-    { start: "#2496ed", stop: "#1a6eb5" },
-    { start: "#e4e4e7", stop: "#9f9fa9" },
-  ];
-
-  const leftCurvatures = [80, 50, 20, 0, -20, -50, -80];
-  const rightCurvatures = [-80, -50, -20, 0, 20, 50, 80];
-
-  const leftRefs = [refL1, refL2, refL3, refL4, refL5];
-  const rightRefs = [refR1, refR2, refR3, refR4, refR5];
-
   return (
     <div
-      className={`relative  flex flex-col items-center justify-center w-full overflow-hidden ${className}`}
-      style={{
-        height: 600,
-        background: "transparent",
-        borderRadius: 16,
-      }}
+      className={`relative flex flex-col items-center justify-center w-full overflow-hidden ${className}`}
+      style={{ height: 600, background: "transparent", borderRadius: 16 }}
     >
       <ShinyText
         text="Tech Stack"
@@ -748,6 +356,7 @@ export function TechStackConvergence({
         speed={2.5}
         className="text-5xl font-bold"
       />
+
       <div
         ref={containerRef}
         className="relative w-full h-full flex items-center justify-center"
@@ -756,19 +365,32 @@ export function TechStackConvergence({
           className="absolute left-[6%] flex flex-col gap-5 justify-center"
           style={{ height: "100%" }}
         >
-          {leftTechs.map((t, i) => (
-            <IconCircle key={i} ref={t.ref} icon={t.icon} label={t.label} />
+          {leftIcons.map((t, i) => (
+            <IconCircle
+              key={i}
+              ref={leftRefs[i]}
+              icon={t.icon}
+              label={t.label}
+            />
           ))}
         </div>
 
+        {/* ── Right icons ── */}
         <div
           className="absolute right-[6%] flex flex-col gap-5 justify-center"
           style={{ height: "100%" }}
         >
-          {rightTechs.map((t, i) => (
-            <IconCircle key={i} ref={t.ref} icon={t.icon} label={t.label} />
+          {rightIcons.map((t, i) => (
+            <IconCircle
+              key={i}
+              ref={rightRefs[i]}
+              icon={t.icon}
+              label={t.label}
+            />
           ))}
         </div>
+
+        {/* ── Center orbiting logo ── */}
         <div
           className="relative flex items-center justify-center"
           style={{ width: 200, height: 200 }}
@@ -831,7 +453,6 @@ export function TechStackConvergence({
             animate={{ rotate: 360 }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           />
-
           <motion.div
             style={{
               position: "absolute",
@@ -847,38 +468,41 @@ export function TechStackConvergence({
           <CenterLogo ref={centerRef} />
         </div>
 
-        {(leftRefs as RefObject<HTMLDivElement | null>[]).map((r, i) => (
+        {/* ── Beams kiri ── */}
+        {leftIcons.map((_, i) => (
           <AnimatedBeam
             key={`L${i}`}
             containerRef={containerRef}
-            fromRef={r}
+            fromRef={leftRefs[i]}
             toRef={centerRef}
-            curvature={leftCurvatures[i]}
+            curvature={LEFT_CURVATURES[i]}
             duration={6 + i * 0.8}
             delay={i * 0.5}
-            gradientStartColor={leftBeamColors[i].start}
-            gradientStopColor={leftBeamColors[i].stop}
-            pathColor="oklch(27.4% 0.006 286.033)"
+            gradientStartColor={LEFT_BEAM_COLORS[i].start}
+            gradientStopColor={LEFT_BEAM_COLORS[i].stop}
+            pathColor={PATH_COLOR}
           />
         ))}
 
-        {(rightRefs as RefObject<HTMLDivElement | null>[]).map((r, i) => (
+        {/* ── Beams kanan ── */}
+        {rightIcons.map((_, i) => (
           <AnimatedBeam
             key={`R${i}`}
             containerRef={containerRef}
-            fromRef={r}
+            fromRef={rightRefs[i]}
             toRef={centerRef}
             reverse
-            curvature={rightCurvatures[i]}
+            curvature={RIGHT_CURVATURES[i]}
             duration={6 + i * 0.8}
             delay={i * 0.5 + 0.25}
-            gradientStartColor={rightBeamColors[i].start}
-            gradientStopColor={rightBeamColors[i].stop}
-            pathColor="oklch(27.4% 0.006 286.033)"
+            gradientStartColor={RIGHT_BEAM_COLORS[i].start}
+            gradientStopColor={RIGHT_BEAM_COLORS[i].stop}
+            pathColor={PATH_COLOR}
           />
         ))}
       </div>
 
+      {/* ── Footer label ── */}
       <div
         style={{
           position: "absolute",
@@ -890,15 +514,7 @@ export function TechStackConvergence({
           gap: 8,
         }}
       >
-        <div
-          style={{
-            width: 6,
-            height: 6,
-            borderRadius: "50%",
-            background: "#f4f4f5",
-            boxShadow: "0 0 6px #00d4ff",
-          }}
-        />
+        <Dot />
         <span
           style={{
             fontSize: 11,
@@ -910,18 +526,22 @@ export function TechStackConvergence({
         >
           Tech Stack Convergence
         </span>
-        <div
-          style={{
-            width: 6,
-            height: 6,
-            borderRadius: "50%",
-            background: "#f4f4f5",
-            boxShadow: "0 0 6px #00d4ff",
-          }}
-        />
+        <Dot />
       </div>
     </div>
   );
 }
+
+const Dot = () => (
+  <div
+    style={{
+      width: 6,
+      height: 6,
+      borderRadius: "50%",
+      background: "#f4f4f5",
+      boxShadow: "0 0 6px #00d4ff",
+    }}
+  />
+);
 
 export default TechStackConvergence;
