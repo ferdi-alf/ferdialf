@@ -17,7 +17,7 @@ const Main = () => {
         behindGlowEnabled={false}
         avatarUrl="/images/avatar.png"
         name="Muhammad Ferdi Alfian"
-        title="Fullstack Developer"
+        title="Software Engineer"
       />
     </div>
   );

@@ -3,7 +3,7 @@
 
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Canvas, extend, useFrame } from "@react-three/fiber";
+import { Canvas, extend, useFrame, ThreeElement } from "@react-three/fiber";
 import {
   useGLTF,
   useTexture,
@@ -24,6 +24,19 @@ import * as THREE from "three";
 
 const cardGLB = "/images/lanyard/card.glb";
 const lanyard = "/images/lanyard/lanyard.png";
+
+declare module "@react-three/fiber" {
+  interface ThreeElements {
+    meshLineGeometry: ThreeElement<typeof MeshLineGeometry>;
+    meshLineMaterial: Omit<
+      ThreeElement<typeof MeshLineMaterial>,
+      "args" | "useMap"
+    > & {
+      args?: any[];
+      useMap?: number | boolean;
+    };
+  }
+}
 
 extend({ MeshLineGeometry, MeshLineMaterial });
 
@@ -123,7 +136,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
         new THREE.Vector3(),
         new THREE.Vector3(),
         new THREE.Vector3(),
-      ])
+      ]),
   );
   const [dragged, drag] = useState<false | THREE.Vector3>(false);
   const [hovered, hover] = useState(false);
@@ -177,15 +190,15 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
       [j1, j2].forEach((ref) => {
         if (!ref.current.lerped)
           ref.current.lerped = new THREE.Vector3().copy(
-            ref.current.translation()
+            ref.current.translation(),
           );
         const clampedDistance = Math.max(
           0.1,
-          Math.min(1, ref.current.lerped.distanceTo(ref.current.translation()))
+          Math.min(1, ref.current.lerped.distanceTo(ref.current.translation())),
         );
         ref.current.lerped.lerp(
           ref.current.translation(),
-          delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed))
+          delta * (minSpeed + clampedDistance * (maxSpeed - minSpeed)),
         );
       });
       curve.points[0].copy(j3.current.translation());
@@ -259,7 +272,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
               drag(
                 new THREE.Vector3()
                   .copy(e.point)
-                  .sub(vec.copy(card.current.translation()))
+                  .sub(vec.copy(card.current.translation())),
               );
             }}
           >
@@ -288,7 +301,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
           color="white"
           depthTest={false}
           resolution={isSmall ? [1000, 2000] : [1000, 1000]}
-          useMap
+          useMap={1}
           map={texture}
           repeat={[-4, 1]}
           lineWidth={1}

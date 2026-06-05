@@ -46,6 +46,8 @@ export const useProjects = (enabled: boolean) => {
       const result: ApiResponse<ProjectsApiData> = await res.json();
       if (!result.success) throw new Error(result.message ?? "Unknown error");
 
+      if (!result.data) throw new Error("No data returned");
+
       const { items, total, hasMore } = result.data;
 
       pageCache.set(page, items);

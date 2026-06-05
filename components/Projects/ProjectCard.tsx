@@ -78,7 +78,6 @@ export default function ProjectCard({
             "transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease",
         }}
       >
-        {/* Image */}
         <div className="relative w-full aspect-video overflow-hidden bg-zinc-900">
           <div
             className="absolute inset-0 bg-zinc-700/35 animate-pulse"

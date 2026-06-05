@@ -1,45 +1,46 @@
-import { ApiResponse } from "@/types/api";
-import { Journey } from "@/types/journey";
+// app/api/v1/about/route.ts
 import { NextResponse } from "next/server";
+import { sanityClient } from "@/lib/sanity";
+import { ABOUT_QUERY } from "@/lib/sanity/queries";
+import type { ApiResponse } from "@/types/api";
+import type { AboutApiData } from "@/types/about";
 
-const journeyData: Journey = {
-  events: [
-    {
-      id: "smk",
-      year: "2023 - 2026",
-      title: "Software Engineering Student",
-      subtitle: "SMK Negeri 4 Palembang",
-      description:
-        "Menempuh pendidikan jurusan Software Engineering. Membangun fondasi kuat dalam pemrograman, pengembangan web, algoritma, dan rekayasa perangkat lunak sejak bangku sekolah.",
-      color: "text-blue-400",
-    },
-    {
-      id: "freelance",
-      year: "Oct 2023 - Present",
-      title: "Freelance Web Developer",
-      subtitle: "Independent",
-      description:
-        "Mengerjakan berbagai proyek web development untuk klien, membangun website dan aplikasi fullstack menggunakan Laravel, Next.js, React TypeScript, serta Golang.",
-      color: "text-emerald-400",
-    },
-    {
-      id: "syneps",
-      year: "Jul 2025 - Jan 2026",
-      title: "Software Engineering Intern",
-      subtitle: "Syneps Academy, Palembang",
-      description:
-        "Internship sebagai software engineer, berkontribusi langsung dalam pengembangan produk dan sistem perangkat lunak bersama tim profesional.",
-      color: "text-purple-400",
-    },
-  ],
-};
+export const runtime = "nodejs";
 
 export async function GET() {
-  const response: ApiResponse<Journey> = {
-    success: true,
-    data: journeyData,
-    message: "Journey data fetched successfully",
-  };
+  try {
+    const data: AboutApiData = await sanityClient.fetch(ABOUT_QUERY);
 
-  return NextResponse.json(response);
+    if (!data) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "About data not found",
+        } satisfies ApiResponse<null>,
+        { status: 404 },
+      );
+    }
+
+    const response: ApiResponse<AboutApiData> = {
+      success: true,
+      data,
+      message: "About data fetched successfully",
+    };
+
+    return NextResponse.json(response, {
+      headers: {
+        "Cache-Control":
+          "public, s-maxage=86400, stale-while-revalidate=604800",
+      },
+    });
+  } catch (error) {
+    console.error("[/api/v1/about] Sanity fetch error:", error);
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Failed to fetch about data",
+      } satisfies ApiResponse<null>,
+      { status: 500 },
+    );
+  }
 }

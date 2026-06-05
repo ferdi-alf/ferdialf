@@ -4,8 +4,8 @@ export interface Project {
   description: string;
   image: string;
   techStack: string[];
-  githubUrl?: string;
-  liveUrl?: string;
+  githubUrl?: string | null;
+  liveUrl?: string | null;
   isOpenSource: boolean;
 }
 

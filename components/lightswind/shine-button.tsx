@@ -35,7 +35,6 @@ export const ShineButton: React.FC<ShineButtonProps> = ({
 
   return (
     <button
-      // disabled native agar tidak fokusable/submittable via keyboard
       disabled={disabled}
       onClick={disabled ? undefined : onClick}
       className={`relative text-white font-medium rounded-md min-w-30 min-h-11
@@ -51,7 +50,6 @@ export const ShineButton: React.FC<ShineButtonProps> = ({
         color: "hsl(0 0% 100%)",
         fontSize,
         padding,
-        // Disabled: turunkan opacity, hilangkan shadow & interaksi
         opacity: disabled ? 0.32 : 1,
         transition:
           "background-position 0.8s ease, transform 0.15s ease, opacity 0.2s ease",
@@ -80,7 +78,7 @@ export const ShineButton: React.FC<ShineButtonProps> = ({
 
       {!disabled && (
         <span
-          className="pointer-events-none absolute inset-0 -translate-x-full skew-x-[-20deg]
+          className="pointer-events-none absolute inset-0 -left-2.5 -translate-x-full skew-x-[-20deg]
             bg-white/20 group-hover:translate-x-[200%] transition-transform duration-700 ease-in-out"
         />
       )}

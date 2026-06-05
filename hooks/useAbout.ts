@@ -1,39 +1,78 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import { About } from "@/types/about";
-import { ApiResponse } from "@/types/api";
-import { useEffect, useState } from "react";
+import { AboutApiData } from "@/types/about";
+import { useEffect, useRef, useState } from "react";
 
-export const useAbout = () => {
-  const [data, setData] = useState<About | null>(null);
-  const [loading, setLoading] = useState(true);
+let cache: AboutApiData | null = null;
+let inflightPromise: Promise<AboutApiData> | null = null;
+
+async function fetchAboutData(): Promise<AboutApiData> {
+  if (cache) return cache;
+
+  if (!inflightPromise) {
+    inflightPromise = fetch("/api/about")
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((json) => {
+        cache = json.data as AboutApiData;
+        inflightPromise = null;
+        return cache;
+      })
+      .catch((err) => {
+        inflightPromise = null;
+        throw err;
+      });
+  }
+
+  return inflightPromise;
+}
+
+export function prefetchAbout(): void {
+  fetchAboutData().catch(() => {});
+}
+
+interface UseAboutReturn {
+  data: AboutApiData | null;
+  loading: boolean;
+  error: string | null;
+}
+
+export function useAbout(): UseAboutReturn {
+  const [data, setData] = useState<AboutApiData | null>(() => cache);
+  const [loading, setLoading] = useState(() => cache === null);
   const [error, setError] = useState<string | null>(null);
+  const mountedRef = useRef(true);
 
   useEffect(() => {
-    const fetchAbout = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch("/api/about");
-        if (!res.ok) {
-          throw new Error(`failed to fetch data`);
-        }
+    mountedRef.current = true;
 
-        const result: ApiResponse<About> = await res.json();
+    if (cache !== null) {
+      setData(cache);
+      setLoading(false);
+      return;
+    }
 
-        if (result.success) {
-          setData(result.data);
-        } else {
-          throw new Error(result.message || "unknown error");
-        }
-      } catch (error) {
-        setError(error instanceof Error ? error.message : "An error oncurred");
-      } finally {
-        setLoading(false);
-      }
+    fetchAboutData()
+      .then((d) => {
+        if (!mountedRef.current) return;
+        setData(d);
+        setError(null);
+      })
+      .catch((err: Error) => {
+        if (!mountedRef.current) return;
+        setError(err.message);
+      })
+      .finally(() => {
+        if (mountedRef.current) setLoading(false);
+      });
+
+    return () => {
+      mountedRef.current = false;
     };
-
-    fetchAbout();
   }, []);
 
   return { data, loading, error };
-};
+}

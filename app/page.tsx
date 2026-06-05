@@ -11,8 +11,9 @@ import ProjectsSection from "@/sections/Projects";
 import InteractiveGridBackground from "@/components/lightswind/interactive-grid-background";
 import StripesBackground from "@/components/lightswind/stripes-background";
 import CertificationsSection from "@/sections/Certifications";
-import ContactSection from "@/sections/Contact";
+
 import ContactFooter from "@/sections/Contact";
+import { prefetchAbout } from "@/hooks/useAbout";
 
 const TOTAL = 7;
 const COOLDOWN_MS = 600;
@@ -41,13 +42,17 @@ export default function Home() {
   const [page, setPage] = useState(0);
   const [dir, setDir] = useState(1);
   const animating = useRef(false);
-  const cooldownUntil = useRef(0); // timestamp kapan cooldown selesai
+  const cooldownUntil = useRef(0);
   const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    prefetchAbout();
+  }, []);
 
   const navigate = useCallback(
     (next: number) => {
       if (animating.current) return;
-      if (Date.now() < cooldownUntil.current) return; // blok selama cooldown
+      if (Date.now() < cooldownUntil.current) return;
       if (next === page || next < 0 || next >= TOTAL) return;
 
       setDir(next > page ? 1 : -1);
@@ -225,7 +230,7 @@ export default function Home() {
               <div className="absolute inset-0 z-0">
                 <StripesBackground
                   position="right"
-                  width="w-full lg:w-1/2"
+                  width="w-full "
                   height="h-full"
                   opacity="opacity-30 lg:opacity-50"
                 />

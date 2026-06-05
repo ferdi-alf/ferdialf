@@ -2,35 +2,63 @@
 
 import { ApiResponse } from "@/types/api";
 import { Journey } from "@/types/journey";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+let clientCache: Journey | null = null;
+let inflight: Promise<Journey> | null = null;
+
+async function fetchJourneyData(): Promise<Journey> {
+  if (clientCache) return clientCache;
+
+  if (!inflight) {
+    inflight = fetch("/api/journey", {
+      cache: "default",
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then((json: ApiResponse<Journey>) => {
+        if (!json.success) throw new Error(json.message || "Unknown error");
+        clientCache = json.data;
+        inflight = null;
+        return clientCache;
+      })
+      .catch((err) => {
+        inflight = null;
+        throw err;
+      });
+  }
+
+  return inflight;
+}
 
 export const useJourney = () => {
-  const [data, setData] = useState<Journey | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<Journey | null>(() => clientCache);
+  const [loading, setLoading] = useState(() => clientCache === null);
   const [error, setError] = useState<string | null>(null);
+  const mountedRef = useRef(true);
 
   useEffect(() => {
-    const fetchJourney = async () => {
-      try {
-        setLoading(true);
-        const res = await fetch("/api/journey");
-        if (!res.ok) throw new Error("Failed to fetch data");
+    mountedRef.current = true;
 
-        const result: ApiResponse<Journey> = await res.json();
-
-        if (result.success) {
-          setData(result.data);
-        } else {
-          throw new Error(result.message || "Unknown error");
+    fetchJourneyData()
+      .then((result) => {
+        if (mountedRef.current) {
+          setData(result);
+          setLoading(false);
         }
-      } catch (error) {
-        setError((error as Error).message);
-      } finally {
-        setLoading(false);
-      }
-    };
+      })
+      .catch((err) => {
+        if (mountedRef.current && (err as Error).name !== "AbortError") {
+          setError((err as Error).message);
+          setLoading(false);
+        }
+      });
 
-    fetchJourney();
+    return () => {
+      mountedRef.current = false;
+    };
   }, []);
 
   return { data, loading, error };

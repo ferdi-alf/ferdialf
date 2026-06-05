@@ -4,7 +4,6 @@ export interface JourneyEvent {
   title: string;
   subtitle?: string;
   description: string;
-  color?: string;
 }
 
 export interface Journey {

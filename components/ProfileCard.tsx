@@ -62,8 +62,6 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
 
   name = "Javi A. Torres",
   title = "Software Engineer",
-
-  onContactClick,
 }) => {
   const wrapRef = useRef<HTMLDivElement>(null);
   const shellRef = useRef<HTMLDivElement>(null);
@@ -345,10 +343,6 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
       }) as React.CSSProperties,
     [iconUrl, grainUrl, innerGradient, behindGlowColor, behindGlowSize],
   );
-
-  const handleContactClick = useCallback(() => {
-    onContactClick?.();
-  }, [onContactClick]);
 
   return (
     <div

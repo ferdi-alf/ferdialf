@@ -176,7 +176,6 @@ export default function ProjectsSection() {
         </div>
       </div>
 
-      {/* ── DRAWER (bottom) ── */}
       <Drawer open={isOpen} onOpenChange={setIsOpen} direction="bottom">
         <DrawerContent className="h-[80vh] flex justify-center items-center">
           <VisuallyHidden>
