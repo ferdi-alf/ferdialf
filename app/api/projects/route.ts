@@ -17,8 +17,6 @@ export async function GET(request: NextRequest) {
       Math.max(1, parseInt(searchParams.get("limit") ?? "10")),
     );
 
-    // Fetch all, paginate in-memory
-    // Alternatif: gunakan GROQ slice [$start...$end] untuk dataset besar
     const allProjects: Project[] = await sanityClient.fetch(PROJECTS_QUERY);
 
     const start = (page - 1) * limit;
