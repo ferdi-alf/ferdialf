@@ -2,8 +2,36 @@ import { darkSurface, rimBorder } from "@/styles/surfaces";
 import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { motion } from "framer-motion";
 
-export default function Footer() {
+const SECTION_MAP: Record<string, number> = {
+  Projects: 4,
+  "Certifications & Awards": 5,
+  Journey: 2,
+};
+
+const FREELANCE_LINKS = [
+  {
+    label: "Fiverr",
+    href: "https://www.fiverr.com/ferdialf_dev",
+  },
+  {
+    label: "Upwork",
+    href: "https://www.upwork.com/freelancers/~010945969eb89d66ab",
+  },
+  {
+    label: "Freelancer.com",
+    href: "https://www.freelancer.com/u/Ferdialfian80?frm=Ferdialfian80&sb=t",
+  },
+];
+
+const WORK_LINKS = ["Projects", "Certifications & Awards", "Journey"];
+
+interface FooterProps {
+  onNavigate?: (index: number) => void;
+}
+
+export default function Footer({ onNavigate }: FooterProps) {
   const Year = new Date().getFullYear();
+
   const socialLinks = [
     {
       icon: <FaGithub size={18} />,
@@ -22,10 +50,6 @@ export default function Footer() {
     },
   ];
 
-  const footerLinks = {
-    Work: ["Projects", "Certifications & Awards", "Journey"],
-    "Available On": ["Fiverr", "Upwork", "Freelancer.com"],
-  };
   return (
     <footer className="relative overflow-hidden border-t border-white/4">
       <div className="max-w-7xl mx-auto px-6 pt-14 pb-8">
@@ -69,25 +93,43 @@ export default function Footer() {
             </div>
           </div>
 
-          {Object.entries(footerLinks).map(([title, links]) => (
-            <div key={title}>
-              <p className="text-xs tracking-[0.2em] text-white/25 uppercase mb-4">
-                {title}
-              </p>
-              <ul className="space-y-2.5">
-                {links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
-                      className="text-sm text-white/40 hover:text-white/70 transition-colors font-light"
-                    >
-                      {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div>
+            <p className="text-xs tracking-[0.2em] text-white/25 uppercase mb-4">
+              Work
+            </p>
+            <ul className="space-y-2.5">
+              {WORK_LINKS.map((link) => (
+                <li key={link}>
+                  <button
+                    onClick={() => onNavigate?.(SECTION_MAP[link])}
+                    className="text-sm text-white/40 hover:text-white/70 transition-colors font-light cursor-pointer text-left"
+                  >
+                    {link}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <p className="text-xs tracking-[0.2em] text-white/25 uppercase mb-4">
+              Available On
+            </p>
+            <ul className="space-y-2.5">
+              {FREELANCE_LINKS.map((item) => (
+                <li key={item.label}>
+                  <a
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-white/40 hover:text-white/70 transition-colors font-light"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         <div

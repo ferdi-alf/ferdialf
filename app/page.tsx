@@ -11,9 +11,9 @@ import ProjectsSection from "@/sections/Projects";
 import InteractiveGridBackground from "@/components/lightswind/interactive-grid-background";
 import StripesBackground from "@/components/lightswind/stripes-background";
 import CertificationsSection from "@/sections/Certifications";
-
 import ContactFooter from "@/sections/Contact";
 import { prefetchAbout } from "@/hooks/useAbout";
+import Navbar from "@/components/Navbar";
 
 const TOTAL = 7;
 const COOLDOWN_MS = 600;
@@ -132,6 +132,8 @@ export default function Home() {
 
   return (
     <div className="fixed inset-0 bg-zinc-950 overflow-hidden">
+      <Navbar currentPage={page} onNavigate={navigate} />
+
       <AnimatePresence custom={dir} mode="wait">
         <motion.div
           key={page}

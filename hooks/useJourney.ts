@@ -20,6 +20,7 @@ async function fetchJourneyData(): Promise<Journey> {
       })
       .then((json: ApiResponse<Journey>) => {
         if (!json.success) throw new Error(json.message || "Unknown error");
+        if (!json.data) throw new Error("No data received");
         clientCache = json.data;
         inflight = null;
         return clientCache;
@@ -27,7 +28,7 @@ async function fetchJourneyData(): Promise<Journey> {
       .catch((err) => {
         inflight = null;
         throw err;
-      });
+      }) as Promise<Journey>;
   }
 
   return inflight;

@@ -28,13 +28,7 @@ const lanyard = "/images/lanyard/lanyard.png";
 declare module "@react-three/fiber" {
   interface ThreeElements {
     meshLineGeometry: ThreeElement<typeof MeshLineGeometry>;
-    meshLineMaterial: Omit<
-      ThreeElement<typeof MeshLineMaterial>,
-      "args" | "useMap"
-    > & {
-      args?: any[];
-      useMap?: number | boolean;
-    };
+    meshLineMaterial: ThreeElement<typeof MeshLineMaterial>;
   }
 }
 
@@ -214,6 +208,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
 
   curve.curveType = "chordal";
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+  const resolution = new THREE.Vector2(1000, isSmall ? 2000 : 1000);
 
   return (
     <>
@@ -298,9 +293,10 @@ function Band({ maxSpeed = 50, minSpeed = 0 }: BandProps) {
       <mesh ref={band}>
         <meshLineGeometry />
         <meshLineMaterial
+          key={isSmall ? "small" : "large"}
+          args={[{ resolution }]}
           color="white"
           depthTest={false}
-          resolution={isSmall ? [1000, 2000] : [1000, 1000]}
           useMap={1}
           map={texture}
           repeat={[-4, 1]}

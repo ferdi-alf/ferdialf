@@ -1,4 +1,3 @@
-// app/api/v1/certificates/route.ts
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { sanityClient } from "@/lib/sanity";
@@ -27,7 +26,6 @@ export async function GET(request: NextRequest) {
 
     let allCerts: Certificate[] = await sanityClient.fetch(CERTIFICATES_QUERY);
 
-    // Filter opsional berdasarkan category
     if (isValidCategory(categoryParam)) {
       allCerts = allCerts.filter((c) => c.category === categoryParam);
     }

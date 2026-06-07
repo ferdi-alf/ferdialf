@@ -13,7 +13,7 @@ export default function CertificationsSection() {
 
   const previewSrcs = [
     "/images/certificates/5.png",
-    "/images/certificates/2.png",
+    "/images/certificates/2.PNG",
     "/images/certificates/1.png",
   ];
 

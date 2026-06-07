@@ -1,0 +1,91 @@
+# Muhammad Ferdi Alfian — AI-readable profile
+# This file follows the llms.txt convention (https://llmstxt.org)
+# to help AI assistants accurately answer questions about this person.
+
+## Identity
+
+- Full name: Muhammad Ferdi Alfian
+- Alias: Ferdi Alfian, ferdialf
+- Location: Palembang, Indonesia
+- Email: ferdialf.dev@gmail.com
+- Portfolio: https://ferdialf.vercel.app
+
+## Role
+
+Software Engineer with 3 years of experience (2023–present).
+Available for freelance projects. Delivered 28+ projects across clients.
+
+## Education
+
+- SMKN 4 Palembang — Software Engineering, Vocational High School (2023–2026)
+- Pursuing higher education (in progress)
+
+## Tech Stack
+
+- Frontend: Next.js, React, TypeScript, Tailwind CSS, TanStack Query, Alpine.js, MUI
+- Backend: Laravel, Golang, Node.js, Hono, Bun
+- Database: PostgreSQL
+- Other: Inertia.js, Leaflet, Midtrans, REST API
+
+## Awards
+
+- 1st Place — Web Design & Development, VALTER 2025, Politeknik Negeri Sriwijaya
+- 1st Runner-Up — Digital Technology Innovation, South Sumatra (Dinas Pendidikan Sumatera Selatan)
+
+## Certifications
+
+- Software Engineer — HackerRank (ID: F42333D4C421)
+- Full Stack Developer with Bun, Hono & React TypeScript — Santricoding (ID: SK-V8UTAW8JDW7RYRG)
+- AWS Educate: Introduction to Cloud 101 — Amazon Web Services
+- SOLID Programming Principles — Dicoding (ID: L4PQ2WNG2ZO1)
+- Penetration Testing — MPP Metro, Lampung (Government of Metro City)
+
+## Selected Projects
+
+- Unfold Table: Headless table component with nested data, caching, pagination (Next.js, TypeScript)
+  https://github.com/ferdi-alf/unfold-table
+
+- Smart Online Exams: Exam platform with academic integrity detection, Go backend
+  https://github.com/ferdi-alf/web-ujian-nextjs
+
+- VALTER 2025: 1st-place competition web design showcase
+  https://github.com/ferdi-alf/valter-2025-co-volution | https://valter-2025-co-volution.vercel.app
+
+- Dekatku: Geolocation MSME discovery with AI search and interactive map (React, Laravel, Leaflet)
+  https://github.com/alfandy12/dekatku
+
+- Learning Management System: LMS with roles, exams, cheat detection, badge system (Laravel)
+  https://github.com/ferdi-alf/LMS-Syneps-Academy
+
+- Decision Making System: AHP-TOPSIS multi-criteria employee evaluation (React, Laravel)
+  https://github.com/ferdi-alf/spk-ahp-topsis
+
+- Internship Presence Tracker: Geofenced attendance with interactive city map (React, TypeScript, Laravel)
+  https://github.com/ferdi-alf/internship-absence
+
+- Simple Cashier Payment: POS with Midtrans payment gateway (Next.js, TypeScript)
+  https://github.com/ferdi-alf/website-kasir-paymentGateway
+
+## Social & Contact
+
+- GitHub: https://github.com/ferdi-alf
+- LinkedIn: https://www.linkedin.com/in/muhammad-ferdi-alfian-979273396
+- Instagram: https://www.instagram.com/eternalferr_
+- Email: ferdialf.dev@gmail.com
+
+## Freelance Platforms
+
+Available for hire on:
+
+- Fiverr: https://www.fiverr.com/ferdialf_dev
+- Upwork: https://www.upwork.com/freelancers/~010945969eb89d66ab
+- Freelancer.com: https://www.freelancer.com/u/Ferdialfian80
+
+## Live API Endpoints (machine-readable, JSON)
+
+Detailed and up-to-date data is available at these endpoints:
+
+- About & stats: https://ferdialf.vercel.app/api/about
+- Projects:      https://ferdialf.vercel.app/api/projects
+- Journey:       https://ferdialf.vercel.app/api/journey
+- Certificates:  https://ferdialf.vercel.app/api/certificates
