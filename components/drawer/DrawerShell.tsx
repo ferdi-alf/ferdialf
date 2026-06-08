@@ -23,11 +23,14 @@ export default function DrawerShell({
   return (
     <div
       className={`w-[98%] h-full relative ${bgClass} rounded-tr-4xl rounded-tl-4xl overflow-hidden`}
+      onWheel={(e) => e.stopPropagation()}
     >
       <AnimatePresence>
         {!isReady && (
           <motion.div
             className={`absolute inset-0 z-50 flex flex-col items-center justify-center ${bgClass} rounded-tr-4xl rounded-tl-4xl`}
+            onWheel={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
           >
@@ -48,8 +51,12 @@ export default function DrawerShell({
         className="w-full h-full overflow-auto"
         animate={{ opacity: isReady ? 1 : 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        style={{ WebkitOverflowScrolling: "touch" }}
+        style={{
+          WebkitOverflowScrolling: "touch",
+          overscrollBehavior: "contain",
+        }}
         onWheel={(e) => e.stopPropagation()}
+        onTouchMove={(e) => e.stopPropagation()}
       >
         {children}
       </motion.div>

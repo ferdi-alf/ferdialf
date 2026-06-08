@@ -8,19 +8,28 @@ import CertificatesDrawerContent from "@/components/Certifications/CertificatesD
 import PreviewStack from "@/components/Certifications/PriviewStack";
 import VisuallyHidden from "@/components/ui/VisuallyHidden";
 
+const PREVIEW_IMAGES = [
+  {
+    src: "/images/certificates/5.png",
+    alt: "Muhammad Ferdi Alfian – Penetration Tester Certificate from Metro City Public Service Mall",
+  },
+  {
+    src: "/images/certificates/2.PNG",
+    alt: "Muhammad Ferdi Alfian – 1st Place Winner Valter Web Design Competition Sriwijaya State Polytechnic",
+  },
+  {
+    src: "/images/certificates/1.png",
+    alt: "Muhammad Ferdi Alfian – Software Engineer Certificate",
+  },
+] as const;
+
 export default function CertificationsSection() {
   const [isOpen, setIsOpen] = React.useState(false);
-
-  const previewSrcs = [
-    "/images/certificates/5.png",
-    "/images/certificates/2.PNG",
-    "/images/certificates/1.png",
-  ];
 
   return (
     <section className="w-full min-h-screen flex items-center">
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-10 md:py-16 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-        <div className="flex flex-col gap-5  lg:order-1">
+        <div className="flex flex-col gap-5 lg:order-1">
           <span className="inline-flex items-center gap-2 text-xs tracking-[0.18em] text-white/30 uppercase font-mono">
             <span className="w-5 h-px bg-white/20" />
             Credentials
@@ -70,8 +79,8 @@ export default function CertificationsSection() {
           </div>
         </div>
 
-        <div className=" lg:order-2 flex flex-col items-center gap-6">
-          <PreviewStack srcs={previewSrcs} />
+        <div className="lg:order-2 flex flex-col items-center gap-6">
+          <PreviewStack images={PREVIEW_IMAGES} />
 
           <div className="md:hidden">
             <ShineButton
@@ -85,7 +94,10 @@ export default function CertificationsSection() {
       </div>
 
       <Drawer open={isOpen} onOpenChange={setIsOpen} direction="bottom">
-        <DrawerContent className="h-[85vh]">
+        <DrawerContent
+          className="h-[85vh]"
+          onWheel={(e) => e.stopPropagation()}
+        >
           <VisuallyHidden>
             <DrawerTitle>Credentials</DrawerTitle>
           </VisuallyHidden>

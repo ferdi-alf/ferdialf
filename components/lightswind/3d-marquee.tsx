@@ -102,7 +102,7 @@ export const ThreeDMarquee: React.FC<ThreeDMarqueeProps> = ({
                     alt={image.alt}
                     width={970}
                     height={700}
-                    className={`aspect-[970/700] w-full rounded-lg object-cover
+                    className={`aspect-970/700 w-full rounded-lg object-cover
                       ring-1 ring-white/10 shadow-lg
                       transition-shadow duration-300
                       ${isClickable ? "cursor-pointer" : ""}`}

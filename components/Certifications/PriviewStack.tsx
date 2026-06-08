@@ -1,4 +1,15 @@
-export default function PreviewStack({ srcs }: { srcs: string[] }) {
+import Image from "next/image";
+
+interface PreviewImage {
+  src: string;
+  alt: string;
+}
+
+export default function PreviewStack({
+  images,
+}: {
+  images: readonly PreviewImage[] | PreviewImage[];
+}) {
   const rotations = [-6, 1, 7];
   const offsets = [
     "-translate-y-3 -translate-x-2",
@@ -7,8 +18,8 @@ export default function PreviewStack({ srcs }: { srcs: string[] }) {
   ];
 
   return (
-    <div className="relative w-60  h-44 md:w-92 md:h-72 mx-auto pr-8 sm:pr-0">
-      {srcs.slice(0, 3).map((src, i) => (
+    <div className="relative w-60 h-44 md:w-92 md:h-72 mx-auto pr-8 sm:pr-0">
+      {images.slice(0, 3).map((image, i) => (
         <div
           key={i}
           className={`absolute inset-0 rounded-xl overflow-hidden border border-white/[0.07] shadow-2xl ${offsets[i]}`}
@@ -20,11 +31,13 @@ export default function PreviewStack({ srcs }: { srcs: string[] }) {
             boxShadow: "0 12px 40px rgba(0,0,0,0.6)",
           }}
         >
-          <img
-            src={src}
-            alt=""
-            className="w-full h-full object-cover opacity-70"
-            draggable={false}
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            sizes="(max-width: 768px) 240px, 368px"
+            priority
+            className="object-cover"
           />
           <div
             className="absolute inset-0"

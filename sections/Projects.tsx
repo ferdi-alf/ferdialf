@@ -74,7 +74,7 @@ export default function ProjectsSection() {
             </div>
             <div className="w-px bg-white/8" />
             <div>
-              <div className="text-xl font-semibold text-white/80">3</div>
+              <div className="text-xl font-semibold text-white/80">3+</div>
               <div className="text-xs text-white/25 tracking-wide mt-0.5">
                 Years Active
               </div>
@@ -142,7 +142,10 @@ export default function ProjectsSection() {
                   className="relative w-full md:h-90 h-60 overflow-hidden"
                   style={{ borderRadius: 14 }}
                 >
-                  <div className="w-full h-full [&_section]:bg-transparent [&_section]:7dark:bg-transparent">
+                  <div
+                    className="w-full h-full [&_section]:bg-transparent [&_section]:7dark:bg-transparent"
+                    style={{ willChange: "transform" }}
+                  >
                     <ThreeDMarquee images={images} />
                   </div>
 
