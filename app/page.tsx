@@ -75,9 +75,10 @@ export default function Home() {
       const el = sectionRef.current;
       if (!el) return;
 
-      const atTop = el.scrollTop <= 0;
+      const BOUNDARY_TOLERANCE = 4;
       const atBottom =
-        Math.ceil(el.scrollTop + el.clientHeight) >= el.scrollHeight;
+        el.scrollTop + el.clientHeight >= el.scrollHeight - BOUNDARY_TOLERANCE;
+      const atTop = el.scrollTop <= BOUNDARY_TOLERANCE;
 
       if (e.deltaY > 0 && atBottom) {
         e.preventDefault();
@@ -94,26 +95,41 @@ export default function Home() {
 
   useEffect(() => {
     let startY = 0;
+    let startTime = 0;
+
     const onTouchStart = (e: TouchEvent) => {
       startY = e.touches[0].clientY;
+      startTime = Date.now();
     };
+
     const onTouchEnd = (e: TouchEvent) => {
       if (animating.current) return;
       if (Date.now() < cooldownUntil.current) return;
 
-      const diff = startY - e.changedTouches[0].clientY;
-      if (Math.abs(diff) < 60) return;
+      const endY = e.changedTouches[0].clientY;
+      const diff = startY - endY;
+      const elapsed = Math.max(Date.now() - startTime, 1);
+      const velocity = Math.abs(diff) / elapsed;
 
       const el = sectionRef.current;
-      const atTop = !el || el.scrollTop <= 0;
+      const BOUNDARY_TOLERANCE = 4;
+      const atTop = !el || el.scrollTop <= BOUNDARY_TOLERANCE;
       const atBottom =
-        !el || Math.ceil(el.scrollTop + el.clientHeight) >= el.scrollHeight;
+        !el ||
+        el.scrollTop + el.clientHeight >= el.scrollHeight - BOUNDARY_TOLERANCE;
+
+      const isQuickFlick = velocity > 0.4;
+      const threshold = isQuickFlick ? 30 : 45;
+
+      if (Math.abs(diff) < threshold) return;
 
       if (diff > 0 && atBottom) navigate(page + 1);
       if (diff < 0 && atTop) navigate(page - 1);
     };
+
     window.addEventListener("touchstart", onTouchStart, { passive: true });
     window.addEventListener("touchend", onTouchEnd, { passive: true });
+
     return () => {
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchend", onTouchEnd);
@@ -174,7 +190,7 @@ export default function Home() {
                     "radial-gradient(ellipse at center, transparent 35%, rgba(9,9,11,0.65) 45%, rgba(9,9,11,0.97) 100%)",
                 }}
               />
-              <div className="relative z-10 flex items-center justify-center mt-5 md:mt-16 h-[calc(100vh-4rem)]">
+              <div className="relative z-10 flex items-center justify-center mt-2 md:mt-14 h-[calc(100vh-4rem)]">
                 <Main />
               </div>
             </div>
