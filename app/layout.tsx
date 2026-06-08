@@ -90,7 +90,6 @@ export const metadata: Metadata = {
     ],
   },
 
-  // ── Twitter / X ───────────────────────────────────────────────────────────
   twitter: {
     card: "summary_large_image",
     title: "Muhammad Ferdi Alfian | Software Engineer",
