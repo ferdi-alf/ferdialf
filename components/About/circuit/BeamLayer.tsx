@@ -1,6 +1,6 @@
 "use client";
 
-import React, { memo, useLayoutEffect, useRef, useState } from "react";
+import React, { memo, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { BeamPath, StaticPath } from "@/types/about";
 import { computeBeamCSS, injectKeyframes } from "@/lib/keyframes";
 import PulseBeam from "./PulseBeam";
@@ -14,7 +14,7 @@ const BeamLayer = memo(({ beams, statics }: BeamLayerProps) => {
   const measureGroupRef = useRef<SVGGElement>(null);
   const [plMap, setPlMap] = useState<Map<string, number>>(new Map());
 
-  const allBeams = [...beams, ...statics];
+  const allBeams = useMemo(() => [...beams, ...statics], [beams, statics]);
 
   useLayoutEffect(() => {
     const g = measureGroupRef.current;
@@ -30,11 +30,16 @@ const BeamLayer = memo(({ beams, statics }: BeamLayerProps) => {
 
     injectKeyframes(allBeams, map);
     setPlMap(map);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [beams, statics]);
+  }, [allBeams]);
 
-  const beamCSS = computeBeamCSS(beams, plMap, false);
-  const staticCSS = computeBeamCSS(statics, plMap, true);
+  const beamCSS = useMemo(
+    () => computeBeamCSS(beams, plMap, false),
+    [beams, plMap],
+  );
+  const staticCSS = useMemo(
+    () => computeBeamCSS(statics, plMap, true),
+    [statics, plMap],
+  );
 
   return (
     <>

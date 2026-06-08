@@ -22,6 +22,7 @@ export interface CircuitOverlayProps {
   card2Ref: RefObject<HTMLDivElement | null>;
   card3Ref: RefObject<HTMLDivElement | null>;
   card4Ref: RefObject<HTMLDivElement | null>;
+  ready?: boolean;
 }
 
 export default function CircuitOverlay({
@@ -31,6 +32,7 @@ export default function CircuitOverlay({
   card2Ref,
   card3Ref,
   card4Ref,
+  ready = true,
 }: CircuitOverlayProps) {
   const [scene, setScene] = useState<SceneData | null>(null);
   const debRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -52,6 +54,7 @@ export default function CircuitOverlay({
   }, [recalc]);
 
   useEffect(() => {
+    if (!ready) return;
     const raf = requestAnimationFrame(recalc);
     const ro = new ResizeObserver(schedule);
     [containerRef, chipRef, card1Ref, card2Ref, card3Ref, card4Ref].forEach(
@@ -68,6 +71,7 @@ export default function CircuitOverlay({
       removeKeyframes();
     };
   }, [
+    ready, // ← re-runs the effect when AboutCards mounts
     recalc,
     schedule,
     containerRef,
@@ -92,10 +96,12 @@ export default function CircuitOverlay({
         pointerEvents: "none",
         zIndex: 0,
         overflow: "visible",
+        transform: "translateZ(0)",
+        willChange: "transform",
       }}
       viewBox={`0 0 ${scene.w} ${scene.h}`}
       xmlns="http://www.w3.org/2000/svg"
-      preserveAspectRatio="xMidYMid meet"
+      preserveAspectRatio="none"
     >
       <Filters />
       <BeamLayer beams={scene.beams} statics={scene.statics} />

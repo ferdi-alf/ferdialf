@@ -44,7 +44,6 @@ const PulseBeam = memo(
       animationDelay: `${delay}s`,
       animationTimingFunction: "cubic-bezier(0.4,0,0.2,1)",
       animationIterationCount: "infinite",
-      willChange: "stroke-dashoffset",
     } as React.CSSProperties;
 
     const headStyle: React.CSSProperties = {
@@ -55,7 +54,6 @@ const PulseBeam = memo(
       animationDelay: `${delay}s`,
       animationTimingFunction: "cubic-bezier(0.4,0,0.2,1)",
       animationIterationCount: "infinite",
-      willChange: "stroke-dashoffset",
     } as React.CSSProperties;
 
     return (

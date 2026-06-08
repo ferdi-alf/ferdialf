@@ -103,16 +103,9 @@ export const AnimatedBeam = ({
         strokeWidth={pathWidth + 1.5}
         strokeOpacity={1}
         strokeLinecap="round"
-        filter={`url(#glow-${id})`}
+        style={{ filter: "blur(3px)" }}
       />
       <defs>
-        <filter id={`glow-${id}`} x="-20%" y="-20%" width="140%" height="140%">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
         <motion.linearGradient
           id={id}
           gradientUnits="userSpaceOnUse"

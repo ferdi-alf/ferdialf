@@ -10,7 +10,11 @@ import FormContact from "@/components/Contact/FormContact";
 import Footer from "@/components/Footer";
 import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
-export default function ContactFooter() {
+interface ContactFooterProps {
+  onNavigate?: (index: number) => void;
+}
+
+export default function ContactFooter({ onNavigate }: ContactFooterProps) {
   const infoItems = [
     {
       icon: <MdEmail size={18} />,
@@ -101,19 +105,25 @@ export default function ContactFooter() {
               ))}
             </div>
 
-            <div className="md:gap-2.5 gap-2  flex justify-center items-center ">
+            <div className="md:gap-2.5 gap-2 grid md:grid-cols-3 grid-cols-2 w-full mt-6">
               {infoItems.map((item) => (
-                <div key={item.label} style={rimBorder}>
+                <div
+                  key={item.label}
+                  style={rimBorder}
+                  className="last:col-span-2"
+                >
                   <div
                     style={{ ...darkSurface, borderRadius: 13 }}
-                    className="flex items-center md:gap-4 gap-2 md:px-4 px-2 py-2  md:py-3.5"
+                    className="flex w-full items-center md:gap-4 gap-2 md:px-4 px-2 py-2  md:py-3.5"
                   >
                     <span className="text-white/30 shrink-0">{item.icon}</span>
                     <div>
-                      <p className="text-[10px] tracking-widest text-white/25 uppercase">
+                      <p className="sm:text-[10px] text-[9px] tracking-widest text-white/25 uppercase">
                         {item.label}
                       </p>
-                      <p className="text-white/70 truncate text-[6.5px] md:text-[12px] lg:text-[11px] font-light">
+                      <p
+                        className={`text-white/70 truncate text-[8px] md:text-[12px] lg:text-[11px] font-light`}
+                      >
                         {item.value}
                       </p>
                     </div>
@@ -130,7 +140,7 @@ export default function ContactFooter() {
         </div>
       </section>
 
-      <Footer />
+      <Footer onNavigate={onNavigate} />
     </div>
   );
 }

@@ -3,9 +3,9 @@ import { FaGithub, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 const SECTION_MAP: Record<string, number> = {
-  Projects: 4,
-  "Certifications & Awards": 5,
   Journey: 2,
+  "Certifications & Awards": 5,
+  Projects: 4,
 };
 
 const FREELANCE_LINKS = [

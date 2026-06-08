@@ -112,10 +112,9 @@ export const metadata: Metadata = {
     },
   },
 
-  // ── Verification ──────────────────────────────────────────────────────────
-  // verification: {
-  //   google: "YOUR_GOOGLE_SEARCH_CONSOLE_TOKEN",
-  // },
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+  },
 };
 
 // ── JSON-LD Structured Data ────────────────────────────────────────────────

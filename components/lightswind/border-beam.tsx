@@ -1,75 +1,27 @@
-// @ts-nocheck
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { cn } from "../../lib/utils";
 import { motion } from "framer-motion";
 
 interface BorderBeamProps {
-  /**
-   * The size of the border beam.
-   */
   size?: number;
-  /**
-   * The duration of the border beam.
-   */
   duration?: number;
-  /**
-   * The delay of the border beam.
-   */
   delay?: number;
-  /**
-   * The color of the border beam from.
-   */
   colorFrom?: string;
-  /**
-   * The color of the border beam to.
-   */
   colorTo?: string;
-  /**
-   * The motion transition of the border beam.
-   */
   transition?: any;
-  /**
-   * The class name of the border beam.
-   */
   className?: string;
-  /**
-   * The style of the border beam.
-   */
   style?: React.CSSProperties;
-  /**
-   * Whether to reverse the animation direction.
-   */
   reverse?: boolean;
-  /**
-   * The initial offset position (0-100).
-   */
   initialOffset?: number;
-  /**
-   * The thickness of the border.
-   */
   borderThickness?: number;
-  /**
-   * The opacity of the beam.
-   */
   opacity?: number;
-  /**
-   * The intensity of the glow effect.
-   */
   glowIntensity?: number;
-  /**
-   * Border radius of the beam in pixels.
-   */
   beamBorderRadius?: number;
-  /**
-   * Whether to pause animation on hover.
-   */
   pauseOnHover?: boolean;
-  /**
-   * Animation speed multiplier (higher is faster).
-   */
   speedMultiplier?: number;
 }
 
@@ -91,53 +43,78 @@ export const BorderBeam = ({
   pauseOnHover = false,
   speedMultiplier = 1,
 }: BorderBeamProps) => {
-  // Calculate actual duration based on speed multiplier
-  const actualDuration = speedMultiplier ? duration / speedMultiplier : duration;
-  
-  // Generate box shadow for glow effect
-  const glowEffect = glowIntensity > 0 
-    ? `0 0 ${glowIntensity * 5}px ${glowIntensity * 2}px var(--color-from)` 
-    : undefined;
+  const actualDuration = speedMultiplier
+    ? duration / speedMultiplier
+    : duration;
+
+  const glowEffect =
+    glowIntensity > 0
+      ? `0 0 ${glowIntensity * 5}px ${glowIntensity * 2}px var(--color-from)`
+      : undefined;
+
+  // Memoize style object to avoid new reference on every render.
+  // Adds will-change + translateZ(0) to promote a GPU compositing layer
+  // on Safari iOS before the first animation frame, preventing the
+  // mid-animation layer-promotion stall that causes first-frame jank.
+  const beamStyle = useMemo(
+    () =>
+      ({
+        width: size,
+        offsetPath: `rect(0 auto auto 0 round ${beamBorderRadius ?? size}px)`,
+        "--color-from": colorFrom,
+        "--color-to": colorTo,
+        opacity,
+        boxShadow: glowEffect,
+        borderRadius: beamBorderRadius ? `${beamBorderRadius}px` : undefined,
+        willChange: "transform, opacity",
+        transform: "translateZ(0)",
+        ...style,
+      }) as React.CSSProperties,
+    [size, beamBorderRadius, colorFrom, colorTo, opacity, glowEffect, style],
+  );
+
+  // Memoize animate object — Framer Motion uses referential equality to
+  // decide whether to restart/re-diff the animation. A new object every
+  // render triggers an unnecessary reconciler walk even when values are
+  // identical, adding JS overhead per render on the mobile main thread.
+  const animateProps = useMemo(
+    () => ({
+      offsetDistance: reverse
+        ? [`${100 - initialOffset}%`, `${-initialOffset}%`]
+        : [`${initialOffset}%`, `${100 + initialOffset}%`],
+    }),
+    [reverse, initialOffset],
+  );
+
+  // Memoize transition object for the same reason.
+  const transitionProps = useMemo(
+    () => ({
+      repeat: Infinity,
+      ease: "linear" as const,
+      duration: actualDuration,
+      delay: -delay,
+      ...transition,
+    }),
+    [actualDuration, delay, transition],
+  );
 
   return (
- <div className="pointer-events-none absolute inset-0 rounded-[inherit] 
+    <div
+      className="pointer-events-none absolute inset-0 rounded-[inherit] 
     border border-transparent [mask-clip:padding-box,border-box] 
-    [mask-composite:intersect] [mask-image:linear-gradient(transparent,transparent),linear-gradient(#000,#000)]"
- 
-      // style={{ 
-      //   borderWidth: `${borderThickness}px`,
-      // }}
+    mask-intersect mask-[linear-gradient(transparent,transparent),linear-gradient(#000,#000)]"
     >
       <motion.div
         className={cn(
           "absolute aspect-square",
-          "bg-gradient-to-l from-[var(--color-from)] via-[var(--color-to)] to-transparent",
+          "bg-linear-to-l from-(--color-from) via-(--color-to) to-transparent",
           pauseOnHover && "group-hover:animation-play-state-paused",
           className,
         )}
-        style={{
-          width: size,
-          offsetPath: `rect(0 auto auto 0 round ${beamBorderRadius ?? size}px)`,
-          "--color-from": colorFrom,
-          "--color-to": colorTo,
-          opacity: opacity,
-          boxShadow: glowEffect,
-          borderRadius: beamBorderRadius ? `${beamBorderRadius}px` : undefined,
-          ...style,
-        } as any}
+        style={beamStyle}
         initial={{ offsetDistance: `${initialOffset}%` }}
-        animate={{
-          offsetDistance: reverse
-            ? [`${100 - initialOffset}%`, `${-initialOffset}%`]
-            : [`${initialOffset}%`, `${100 + initialOffset}%`],
-        }}
-        transition={{
-          repeat: Infinity,
-          ease: "linear",
-          duration: actualDuration,
-          delay: -delay,
-          ...transition,
-        }}
+        animate={animateProps}
+        transition={transitionProps}
       />
     </div>
   );

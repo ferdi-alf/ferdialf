@@ -30,6 +30,7 @@ const About = () => {
         card2Ref={card2Ref}
         card3Ref={card3Ref}
         card4Ref={card4Ref}
+        ready={!loading && !!data}
       />
 
       <div className="relative z-10 flex justify-center mb-16">
