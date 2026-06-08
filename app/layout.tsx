@@ -81,7 +81,7 @@ export const metadata: Metadata = {
     alternateLocale: "id_ID",
     images: [
       {
-        url: "/og-image.png",
+        url: "/images/og-image.png",
         width: 1200,
         height: 630,
         alt: "Muhammad Ferdi Alfian — Software Engineer Portfolio",
@@ -95,7 +95,7 @@ export const metadata: Metadata = {
     title: "Muhammad Ferdi Alfian | Software Engineer",
     description:
       "Software Engineer from Indonesia. Specialized in Next.js, React, Laravel & TypeScript.",
-    images: ["/og-image.png"],
+    images: ["/images/og-image.png"],
     creator: "@ferdialf",
   },
 
