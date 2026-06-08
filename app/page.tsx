@@ -174,7 +174,7 @@ export default function Home() {
                     "radial-gradient(ellipse at center, transparent 35%, rgba(9,9,11,0.65) 45%, rgba(9,9,11,0.97) 100%)",
                 }}
               />
-              <div className="relative z-10 flex items-center justify-center mt-9 md:mt-16 h-[calc(100vh-4rem)]">
+              <div className="relative z-10 flex items-center justify-center mt-5 md:mt-16 h-[calc(100vh-4rem)]">
                 <Main />
               </div>
             </div>

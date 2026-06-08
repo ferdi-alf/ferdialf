@@ -69,6 +69,9 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   const enterTimerRef = useRef<number | null>(null);
   const leaveRafRef = useRef<number | null>(null);
 
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const touchIntentRef = useRef<"unknown" | "scroll" | "tilt">("unknown");
+
   const tiltEngine = useMemo(() => {
     if (!enableTilt) return null;
 
@@ -193,10 +196,46 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     return { x: evt.clientX - rect.left, y: evt.clientY - rect.top };
   };
 
+  const SCROLL_INTENT_THRESHOLD = 10;
+  const TILT_INTENT_THRESHOLD = 8;
+
   const handlePointerMove = useCallback(
     (event: PointerEvent) => {
       const shell = shellRef.current;
       if (!shell || !tiltEngine) return;
+
+      if (event.pointerType === "touch") {
+        const start = touchStartRef.current;
+        if (!start) return;
+
+        const dx = event.clientX - start.x;
+        const dy = event.clientY - start.y;
+        const absDx = Math.abs(dx);
+        const absDy = Math.abs(dy);
+        const totalMovement = Math.hypot(dx, dy);
+
+        if (touchIntentRef.current === "unknown") {
+          if (totalMovement < TILT_INTENT_THRESHOLD) return;
+
+          if (absDy > absDx && absDy > SCROLL_INTENT_THRESHOLD) {
+            touchIntentRef.current = "scroll";
+            return;
+          } else {
+            touchIntentRef.current = "tilt";
+            shell.classList.add("active");
+            shell.classList.add("entering");
+            if (enterTimerRef.current)
+              window.clearTimeout(enterTimerRef.current);
+            enterTimerRef.current = window.setTimeout(() => {
+              shell.classList.remove("entering");
+            }, ANIMATION_CONFIG.ENTER_TRANSITION_MS);
+          }
+        }
+
+        if (touchIntentRef.current !== "tilt") return;
+      }
+
+      // Mouse or confirmed tilt touch: proceed normally
       const { x, y } = getOffsets(event, shell);
       tiltEngine.setTarget(x, y);
     },
@@ -207,6 +246,12 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
     (event: PointerEvent) => {
       const shell = shellRef.current;
       if (!shell || !tiltEngine) return;
+
+      if (event.pointerType === "touch") {
+        touchStartRef.current = { x: event.clientX, y: event.clientY };
+        touchIntentRef.current = "unknown";
+        return;
+      }
 
       shell.classList.add("active");
       shell.classList.add("entering");
@@ -224,6 +269,9 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
   const handlePointerLeave = useCallback(() => {
     const shell = shellRef.current;
     if (!shell || !tiltEngine) return;
+
+    touchStartRef.current = null;
+    touchIntentRef.current = "unknown";
 
     tiltEngine.toCenter();
 
@@ -351,7 +399,11 @@ const ProfileCardComponent: React.FC<ProfileCardProps> = ({
       style={cardStyle}
     >
       {behindGlowEnabled && <div className="pc-behind " />}
-      <div ref={shellRef} className="pc-card-shell   md:pl-[20em]">
+      <div
+        ref={shellRef}
+        className="pc-card-shell md:pl-[20em]"
+        style={{ touchAction: "pan-y" }}
+      >
         <section className="pc-card">
           <div className="pc-inside">
             <div className="pc-shine" />
