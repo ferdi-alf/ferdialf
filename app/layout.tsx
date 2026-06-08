@@ -133,7 +133,7 @@ const jsonLd = {
       email: "ferdialf.dev@gmail.com",
       image: {
         "@type": "ImageObject",
-        url: `${BASE_URL}/images/icon.PNG`,
+        url: `${BASE_URL}/images/icon.png`,
         caption: "Muhammad Ferdi Alfian — Software Engineer",
       },
       description:
