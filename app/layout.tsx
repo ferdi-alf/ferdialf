@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
 
   description:
-    "Muhammad Ferdi Alfian — Software Engineer from Indonesia. Specialized in Next.js, React, Laravel, and TypeScript. Building fast, scalable, and modern web applications.",
+    "Muhammad Ferdi Alfian — Software Engineer from Indonesia. Specialized in Next.js, React, TypeScript, Laravel and Golang. Building fast, scalable, and modern web applications.",
 
   keywords: [
     "Muhammad Ferdi Alfian",
@@ -122,7 +122,6 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
-    // 1. Person — primary profile node
     {
       "@type": "Person",
       "@id": `${BASE_URL}/#person`,
@@ -136,7 +135,7 @@ const jsonLd = {
         caption: "Muhammad Ferdi Alfian — Software Engineer",
       },
       description:
-        "Muhammad Ferdi Alfian is a Software Engineer from Palembang, Indonesia, currently studying Software Engineering at SMKN 4 Palembang (2023–2026). He has been working as a freelance full-stack developer since 2023, delivering 28+ projects across clients. He specializes in building modern web applications with Next.js, React, Laravel, TypeScript, and Golang — with a focus on performant UIs and scalable backend architectures. He is also an award-winning developer: 1st Place at VALTER 2025 (Web Design & Development, Politeknik Negeri Sriwijaya) and 1st Runner-Up at the Digital Technology Innovation competition, South Sumatra.",
+        "Muhammad Ferdi Alfian is a Software Engineer from Palembang, Indonesia, currently studying Software Engineering at SMKN 4 Palembang (2023–2026). He has been working as a freelance full-stack developer since 2023, delivering 20+ projects across clients. He specializes in building modern web applications with Next.js, React, Laravel, TypeScript, and Golang — with a focus on performant UIs and scalable backend architectures. He is also an award-winning developer: 1st Place at VALTER 2025 (Web Design & Development, Politeknik Negeri Sriwijaya) and 1st Runner-Up at the Digital Technology Innovation competition, South Sumatra.",
       jobTitle: "Software Engineer",
       worksFor: {
         "@type": "Organization",
