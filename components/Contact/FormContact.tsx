@@ -1,4 +1,3 @@
-// components/FormContact.tsx
 import { darkSurface, rimBorder } from "@/styles/surfaces";
 import { ShineButton } from "../lightswind/shine-button";
 import { useState } from "react";
@@ -21,7 +20,7 @@ export default function FormContact() {
     outline: "none",
     width: "100%",
     padding: "12px 16px",
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: "inherit",
     transition: "border-color 0.2s, box-shadow 0.2s",
     opacity: isDisabled ? 0.5 : 1,

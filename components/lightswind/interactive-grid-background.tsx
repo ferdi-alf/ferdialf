@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/purity */
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -239,7 +240,7 @@ export const InteractiveGridBackground: React.FC<
 
       {showFade && (
         <div
-          className="pointer-events-none absolute inset-0 bg-white dark:bg-zinc-950"
+          className="pointer-events-none absolute inset-0 bg-zinc-950"
           style={{
             maskImage: `radial-gradient(ellipse at center, transparent ${fadeIntensity}%, black)`,
             WebkitMaskImage: `radial-gradient(ellipse at center, transparent ${fadeIntensity}%, black)`,
