@@ -31,15 +31,15 @@ const VisuallyHidden = ({ children }: { children: React.ReactNode }) => (
 );
 
 const images: MarqueeImage[] = [
-  { src: "/images/projects/1.png", alt: "Project One" },
-  { src: "/images/projects/2.png", alt: "Project Two" },
-  { src: "/images/projects/3.png", alt: "Project Three" },
-  { src: "/images/projects/4.png", alt: "Project Four" },
-  { src: "/images/projects/5.png", alt: "Project Five" },
-  { src: "/images/projects/6.png", alt: "Project Six" },
-  { src: "/images/projects/7.png", alt: "Project Six" },
-  { src: "/images/projects/8.png", alt: "Project Six" },
-  { src: "/images/projects/9.png", alt: "Project Six" },
+  { src: "/images/projects/1.webp", alt: "Project One" },
+  { src: "/images/projects/2.webp", alt: "Project Two" },
+  { src: "/images/projects/3.webp", alt: "Project Three" },
+  { src: "/images/projects/4.webp", alt: "Project Four" },
+  { src: "/images/projects/5.webp", alt: "Project Five" },
+  { src: "/images/projects/6.webp", alt: "Project Six" },
+  { src: "/images/projects/7.webp", alt: "Project Six" },
+  { src: "/images/projects/8.webp", alt: "Project Six" },
+  { src: "/images/projects/9.webp", alt: "Project Six" },
 ];
 
 export default function ProjectsSection() {

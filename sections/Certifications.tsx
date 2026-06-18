@@ -10,15 +10,15 @@ import VisuallyHidden from "@/components/ui/VisuallyHidden";
 
 const PREVIEW_IMAGES = [
   {
-    src: "/images/certificates/5.png",
+    src: "/images/certificates/5.webp",
     alt: "Muhammad Ferdi Alfian – Penetration Tester Certificate from Metro City Public Service Mall",
   },
   {
-    src: "/images/certificates/2.PNG",
+    src: "/images/certificates/2.webp",
     alt: "Muhammad Ferdi Alfian – 1st Place Winner Valter Web Design Competition Sriwijaya State Polytechnic",
   },
   {
-    src: "/images/certificates/1.png",
+    src: "/images/certificates/1.webp",
     alt: "Muhammad Ferdi Alfian – Software Engineer Certificate",
   },
 ] as const;

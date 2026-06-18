@@ -15,7 +15,7 @@ const Main = () => {
         enableTilt={true}
         enableMobileTilt={false}
         behindGlowEnabled={false}
-        avatarUrl="/images/avatar.png"
+        avatarUrl="/images/avatar.webp"
         name="Muhammad Ferdi Alfian"
         title="Software Engineer"
       />

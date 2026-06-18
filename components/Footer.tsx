@@ -11,7 +11,7 @@ const SECTION_MAP: Record<string, number> = {
 const FREELANCE_LINKS = [
   {
     label: "Fiverr",
-    href: "https://www.fiverr.com/ferdialf_dev",
+    href: "https://www.fiverr.com/s/42Ep1lk",
   },
   {
     label: "Upwork",
