@@ -135,7 +135,7 @@ export default function Navbar({ currentPage, onNavigate }: NavbarProps) {
                         height={200}
                         loading="eager"
                         alt="Muhammad Ferdi Alfian - Logo"
-                        src="/images/icon.PNG"
+                        src="/images/icon.webp"
                         className="w-9 h-9 block"
                         style={{ display: "block" }}
                       />

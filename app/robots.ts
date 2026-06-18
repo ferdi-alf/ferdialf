@@ -12,6 +12,10 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "Claude-Web", allow: "/" },
       { userAgent: "PerplexityBot", allow: "/" },
       { userAgent: "Bingbot", allow: "/" },
+      {
+        userAgent: "Googlebot-Image",
+        allow: ["/images/", "/favicon.ico", "/apple-touch-icon.png"],
+      },
     ],
     sitemap: `${BASE_URL}/sitemap.xml`,
     host: BASE_URL,

@@ -91,7 +91,7 @@ export const CenterLogo = forwardRef<HTMLDivElement>((_, ref) => (
                   height={200}
                   loading="eager"
                   className="w-11 h-11 block"
-                  src="/images/icon.PNG"
+                  src="/images/icon.webp"
                   style={{ display: "block" }}
                 />
               </div>

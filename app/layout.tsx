@@ -15,43 +15,64 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
+const BASE_URL =
+  process.env.NEXT_PUBLIC_BASE_URL ?? "https://ferdialf.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
 
   title: {
-    default: "Muhammad Ferdi Alfian | Software Engineer",
-    template: "%s | Muhammad Ferdi Alfian",
+    default: "Freelance Software Engineer for Hire | Muhammad Ferdi Alfian",
+    template: "%s | Muhammad Ferdi Alfian — Web Developer",
   },
 
   description:
-    "Muhammad Ferdi Alfian — Software Engineer from Indonesia. Specialized in Next.js, React, TypeScript, Laravel and Golang. Building fast, scalable, and modern web applications.",
+    "Freelance Full-Stack Web Developer from Indonesia. Specialized in Next.js, React, Laravel, TypeScript & Golang. 20+ projects delivered for clients worldwide. Available for remote freelance & long-term contracts.",
 
   keywords: [
+    // International — high commercial intent
+    "freelance web developer for hire",
+    "hire web developer",
+    "hire full-stack developer",
+    "hire Next.js developer",
+    "hire React developer",
+    "hire Laravel developer",
+    "remote web developer",
+    "affordable web developer",
+    "offshore web developer",
+    "web developer from Indonesia",
+    "web designer",
+    "Indonesian web developer",
+    "freelance full-stack developer",
+    "web development services",
+    "custom web application development",
+    "software engineer for hire",
+    "remote software engineer",
+
+    //International — tech-specific (clients who know what they want) ===
+    "Next.js developer",
+    "React developer for hire",
+    "Laravel developer for hire",
+    "TypeScript developer",
+    "Golang developer",
+    "full-stack Next.js developer",
+    "Node.js developer for hire",
+
+    //🇮🇩 Indonesia — lokal, tetap dipertahankan
+    "jasa web developer",
+    "jasa pembuatan website",
+    "web developer Indonesia",
+    "software engineer Indonesia",
+    "freelance web developer Indonesia",
+    "jasa web developer Palembang",
+    "web developer Palembang",
+    "jasa software development Indonesia",
+
+    //  Personal brand
     "Muhammad Ferdi Alfian",
     "Ferdi Alfian",
     "ferdialf",
-    "Full-Stack Developer",
-    "Full-Stack Developer Indonesia",
-    "Software Engineer Indonesia",
-    "Frontend Developer Indonesia",
-    "Backend Developer Indonesia",
-    "Web Developer Indonesia",
-    "Freelance Developer Indonesia",
-    "Next.js Developer",
-    "React Developer",
-    "Laravel Developer",
-    "TypeScript Developer",
-    "Golang Developer",
-    "Node.js Developer",
-    "Inertia.js",
-    "Tailwind CSS",
-    "Freelance Web Developer",
-    "Hire Full-Stack Developer",
-    "Web Application Developer",
-    "Portfolio Developer",
-    "Open Source Developer",
+    "ferdialf.dev",
   ],
 
   authors: [{ name: "Muhammad Ferdi Alfian", url: BASE_URL }],
@@ -59,13 +80,27 @@ export const metadata: Metadata = {
   publisher: "Muhammad Ferdi Alfian",
 
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
     apple: "/apple-touch-icon.png",
+    shortcut: "/favicon.ico",
   },
 
   alternates: {
     canonical: BASE_URL,
+
+    languages: {
+      "en-US": BASE_URL,
+      "id-ID": `${BASE_URL}/id`,
+
+      "x-default": BASE_URL,
+    },
   },
+
+  applicationName: "Ferdialf — Software Engineer",
 
   openGraph: {
     type: "profile",
@@ -73,34 +108,33 @@ export const metadata: Metadata = {
     lastName: "Alfian",
     username: "ferdialf",
     gender: "male",
-    title: "Muhammad Ferdi Alfian | Software Engineer",
+    title: "Freelance Software Developer for Hire | Muhammad Ferdi Alfian",
     description:
-      "Software Engineer from Indonesia. Specialized in Next.js, React, Laravel & TypeScript. Available for freelance projects.",
+      "Software Engineer from Indonesia. Next.js, React, Laravel, TypeScript & Golang. 20+ projects delivered. Available for remote freelance worldwide.",
     url: BASE_URL,
-    siteName: "Muhammad Ferdi Alfian — Portfolio",
+    siteName: "Ferdialf — Software Engineer",
     locale: "en_US",
     alternateLocale: "id_ID",
     images: [
       {
-        url: "/images/og-image.png",
+        url: `${BASE_URL}/images/og-image.webp`,
         width: 1200,
         height: 630,
-        alt: "Muhammad Ferdi Alfian — Software Engineer Portfolio",
-        type: "image/png",
+        alt: "Muhammad Ferdi Alfian — Freelance Software from Indonesia",
+        type: "image/webp",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Muhammad Ferdi Alfian | Software Engineer",
+    title: "Freelance Software Engineer for Hire | Muhammad Ferdi Alfian",
     description:
-      "Software Engineer from Indonesia. Specialized in Next.js, React, Laravel & TypeScript.",
-    images: ["/images/og-image.png"],
+      "Software Engineer from Indonesia. Next.js, React, Laravel, TypeScript. 20+ projects. Available for remote freelance worldwide.",
+    images: [`${BASE_URL}/images/og-image.webp`],
     creator: "@ferdialf",
   },
 
-  // ── Robots ────────────────────────────────────────────────────────────────
   robots: {
     index: true,
     follow: true,
@@ -109,17 +143,18 @@ export const metadata: Metadata = {
       follow: true,
       "max-image-preview": "large",
       "max-snippet": -1,
+      "max-video-preview": -1,
     },
   },
+
+  category: "technology",
 
   verification: {
     google: process.env.GOOGLE_SITE_VERIFICATION,
   },
 };
 
-// ── JSON-LD Structured Data ────────────────────────────────────────────────
-// Read by Google, Bing, Gemini, ChatGPT, Perplexity, Claude, and other AI
-// crawlers to accurately answer questions about Muhammad Ferdi Alfian.
+// ─── JSON-LD Structured Data
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -132,25 +167,28 @@ const jsonLd = {
       email: "ferdialf.dev@gmail.com",
       image: {
         "@type": "ImageObject",
-        url: `${BASE_URL}/images/icon.png`,
-        caption: "Muhammad Ferdi Alfian — Software Engineer",
+        url: `${BASE_URL}/images/icon.webp`,
+        caption:
+          "Muhammad Ferdi Alfian — Freelance Web Developer from Indonesia",
       },
       description:
-        "Muhammad Ferdi Alfian is a Software Engineer from Palembang, Indonesia, currently studying Software Engineering at SMKN 4 Palembang (2023–2026). He has been working as a freelance full-stack developer since 2023, delivering 20+ projects across clients. He specializes in building modern web applications with Next.js, React, Laravel, TypeScript, and Golang — with a focus on performant UIs and scalable backend architectures. He is also an award-winning developer: 1st Place at VALTER 2025 (Web Design & Development, Politeknik Negeri Sriwijaya) and 1st Runner-Up at the Digital Technology Innovation competition, South Sumatra.",
-      jobTitle: "Software Engineer",
+        "Muhammad Ferdi Alfian is a Software Engineer and Full-Stack Web Developer from Palembang, Indonesia. Currently studying Software Engineering at SMKN 4 Palembang (2023–2026). Freelance full-stack developer since 2023 with 20+ projects delivered for clients locally and internationally. Specializes in Next.js, React, Laravel, TypeScript, and Golang — with a focus on performant UIs and scalable backend architectures. Award-winning developer: 1st Place at VALTER 2025 (Web Design & Development, Politeknik Negeri Sriwijaya) and 1st Runner-Up at the Digital Technology Innovation competition, South Sumatra.",
+      jobTitle: "Freelance Full-Stack Web Developer & Software Engineer",
       worksFor: {
         "@type": "Organization",
-        name: "Freelance",
+        name: "Freelance (Remote)",
       },
       alumniOf: {
         "@type": "EducationalOrganization",
         name: "SMKN 4 Palembang",
-        description: "Vocational High School — Software Engineering, 2023–2026",
+        description: "Software Engineering, 2023–2026",
       },
       address: {
         "@type": "PostalAddress",
         addressLocality: "Palembang",
+        addressRegion: "South Sumatra",
         addressCountry: "ID",
+        postalCode: "30000",
       },
       nationality: {
         "@type": "Country",
@@ -173,8 +211,6 @@ const jsonLd = {
         "REST API",
         "Web Performance Optimization",
         "UI/UX Implementation",
-        "Decision Support Systems",
-        "Learning Management Systems",
       ],
       hasCredential: [
         {
@@ -208,9 +244,10 @@ const jsonLd = {
           identifier: "L4PQ2WNG2ZO1",
         },
       ],
+
       award: [
-        "1st Place — Web Design & Development Competition, VALTER 2025, Politeknik Negeri Sriwijaya",
-        "1st Runner-Up — Digital Technology Innovation, South Sumatra (Dinas Pendidikan Sumatera Selatan)",
+        "1st Place — Web Design & Development, VALTER 2025, Politeknik Negeri Sriwijaya, Indonesia",
+        "1st Runner-Up — Digital Technology Innovation, South Sumatra Province, Indonesia",
       ],
       sameAs: [
         "https://github.com/ferdi-alf",
@@ -220,67 +257,167 @@ const jsonLd = {
         "https://www.upwork.com/freelancers/~010945969eb89d66ab",
         "https://www.freelancer.com/u/Ferdialfian80",
       ],
-      // Freelance marketplace profiles
       availableService: [
         {
           "@type": "Offer",
           url: "https://www.fiverr.com/ferdialf_dev",
           seller: { "@id": `${BASE_URL}/#person` },
-          description:
-            "Available for freelance web development projects on Fiverr",
+          description: "Available for web development projects on Fiverr",
         },
         {
           "@type": "Offer",
           url: "https://www.upwork.com/freelancers/~010945969eb89d66ab",
           seller: { "@id": `${BASE_URL}/#person` },
-          description:
-            "Available for freelance web development projects on Upwork",
+          description: "Available for web development projects on Upwork",
         },
         {
           "@type": "Offer",
           url: "https://www.freelancer.com/u/Ferdialfian80",
           seller: { "@id": `${BASE_URL}/#person` },
           description:
-            "Available for freelance web development projects on Freelancer.com",
+            "Available for web development projects on Freelancer.com",
         },
       ],
     },
 
-    // 2. WebSite
+    {
+      "@type": "ProfessionalService",
+      "@id": `${BASE_URL}/#service`,
+      name: "Freelance Web Development Services — Muhammad Ferdi Alfian",
+      alternateName: [
+        "Jasa Web Developer Indonesia",
+        "Jasa Pembuatan Website",
+        "Hire Web Developer Indonesia",
+        "Remote Web Developer for Hire",
+        "Affordable Web Development Services",
+      ],
+      // English description
+      description:
+        "Professional web development and software engineering services from Indonesia. Specializing in Next.js, React, Laravel, TypeScript, and Golang. Affordable rates with high-quality output. Available for remote freelance worldwide — startups, SMEs, and enterprise clients.",
+      url: BASE_URL,
+      email: "ferdialf.dev@gmail.com",
+      provider: { "@id": `${BASE_URL}/#person` },
+      // Bilingual serviceType — Google matches ini ke search query dalam bahasa apapun
+      serviceType: [
+        // English
+        "Web Development",
+        "Full-Stack Web Development",
+        "Frontend Development",
+        "Backend Development",
+        "Software Development",
+        "API Development",
+        "Web Application Development",
+        "Landing Page Development",
+        "Company Profile Website",
+        "E-commerce Development",
+        "Custom Software Development",
+        "Remote Web Development",
+        // Indonesian
+        "Jasa Pembuatan Website",
+        "Jasa Web Developer",
+        "Jasa Software Development",
+        "Jasa Aplikasi Web",
+      ],
+      // areaServed — explicit worldwide + Indonesia
+      areaServed: [
+        { "@type": "Country", name: "Indonesia" },
+        { "@type": "Country", name: "United States" },
+        { "@type": "Country", name: "United Kingdom" },
+        { "@type": "Country", name: "Australia" },
+        { "@type": "Country", name: "Singapore" },
+        { "@type": "Country", name: "Malaysia" },
+        { "@type": "AdministrativeArea", name: "Worldwide (Remote)" },
+      ],
+      availableLanguage: [
+        { "@type": "Language", name: "English" },
+        { "@type": "Language", name: "Indonesian" },
+      ],
+      priceRange: "$$",
+      paymentAccepted: ["Bank Transfer", "PayPal", "Wise", "Crypto"],
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Web Development Services",
+        itemListElement: [
+          {
+            "@type": "Offer",
+            name: "Professional Website Development",
+            description:
+              "Modern, fast, SEO-friendly websites built with Next.js or Laravel. Perfect for company profiles, landing pages, and portfolios.",
+          },
+          {
+            "@type": "Offer",
+            name: "Web Application Development",
+            description:
+              "Full-stack web applications with authentication, database, and REST API. Built with Next.js + PostgreSQL or Laravel + MySQL.",
+          },
+          {
+            "@type": "Offer",
+            name: "API & Backend Development",
+            description:
+              "High-performance REST APIs with Go (Golang) or Laravel. Ideal for startups needing scalable backend infrastructure.",
+          },
+          {
+            "@type": "Offer",
+            name: "Frontend Development",
+            description:
+              "UI/UX implementation with React, Next.js, and Tailwind CSS. Highly performant, responsive, and accessible.",
+          },
+        ],
+      },
+    },
+
+    // 3. WebSite
     {
       "@type": "WebSite",
       "@id": `${BASE_URL}/#website`,
       url: BASE_URL,
-      name: "Muhammad Ferdi Alfian — Portfolio",
+      name: "Ferdalf — Freelance Web Developer",
       description:
-        "Official portfolio of Muhammad Ferdi Alfian, Software Engineer from Indonesia.",
+        "Portfolio and services of Muhammad Ferdi Alfian — Freelance Web Developer & Software Engineer from Indonesia.",
       author: { "@id": `${BASE_URL}/#person` },
       inLanguage: ["en", "id"],
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${BASE_URL}/projects?q={search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      },
     },
 
-    // 3. WebPage — homepage
+    // 4. WebPage
     {
       "@type": "WebPage",
       "@id": `${BASE_URL}/#webpage`,
       url: BASE_URL,
-      name: "Muhammad Ferdi Alfian | Software Engineer",
+      name: "Freelance Web Developer for Hire | Muhammad Ferdi Alfian",
       isPartOf: { "@id": `${BASE_URL}/#website` },
       about: { "@id": `${BASE_URL}/#person` },
       description:
-        "Portfolio homepage of Muhammad Ferdi Alfian — Software Engineer from Indonesia.",
+        "Portfolio and freelance web development services by Muhammad Ferdi Alfian — Full-Stack Developer from Indonesia, available worldwide.",
       inLanguage: ["en", "id"],
+      breadcrumb: {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: BASE_URL,
+          },
+        ],
+      },
     },
 
-    // 4. ProfilePage — signals to AI crawlers this is a person's profile
+    // 5. ProfilePage
     {
       "@type": "ProfilePage",
       "@id": `${BASE_URL}/#profilepage`,
       url: BASE_URL,
-      name: "Muhammad Ferdi Alfian — Profile",
+      name: "Muhammad Ferdi Alfian — Web Developer Profile",
       mainEntity: { "@id": `${BASE_URL}/#person` },
       dateModified: new Date().toISOString(),
-      // AI crawlers that support DataFeed will fetch these endpoints directly
-      // to get up-to-date structured data about projects, journey, and credentials
       mentions: [
         { "@type": "DataFeed", url: `${BASE_URL}/api/about` },
         { "@type": "DataFeed", url: `${BASE_URL}/api/projects` },
@@ -289,13 +426,13 @@ const jsonLd = {
       ],
     },
 
-    // 5. CreativeWork items — top projects as indexed entities
+    // 6. ItemList — Projects
     {
       "@type": "ItemList",
       "@id": `${BASE_URL}/#projects`,
       name: "Projects by Muhammad Ferdi Alfian",
       description:
-        "Selected open-source and client projects built by Muhammad Ferdi Alfian.",
+        "Selected web development and software engineering projects by Muhammad Ferdi Alfian.",
       url: `${BASE_URL}/api/projects`,
       author: { "@id": `${BASE_URL}/#person` },
       itemListElement: [
@@ -319,7 +456,7 @@ const jsonLd = {
             "@type": "SoftwareSourceCode",
             name: "Smart Online Exams",
             description:
-              "High-performance examination platform with real-time academic integrity detection and a Go-powered backend for sub-millisecond response.",
+              "High-performance online examination platform with real-time academic integrity detection and a Go-powered backend for sub-millisecond response.",
             codeRepository: "https://github.com/ferdi-alf/web-ujian-nextjs",
             programmingLanguage: ["Next.js", "TypeScript", "Go", "PostgreSQL"],
             author: { "@id": `${BASE_URL}/#person` },
@@ -330,9 +467,9 @@ const jsonLd = {
           position: 3,
           item: {
             "@type": "SoftwareSourceCode",
-            name: "VALTER 2025",
+            name: "VALTER 2025 — 1st Place Winner",
             description:
-              "1st-place competition entry for VALTER 2025 at Politeknik Negeri Sriwijaya — a polished, performance-focused web design showcase.",
+              "Award-winning competition entry for VALTER 2025 at Politeknik Negeri Sriwijaya — a polished, performance-focused web design showcase.",
             codeRepository:
               "https://github.com/ferdi-alf/valter-2025-co-volution",
             url: "https://valter-2025-co-volution.vercel.app/",
